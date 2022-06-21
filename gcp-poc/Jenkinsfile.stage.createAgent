@@ -4,7 +4,6 @@ import groovy.json.JsonSlurperClassic
 def call(){
     def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
     def existing_agents_list = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.getExistingAgent"
-    restore_agent = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.restoreAgent"
     def exisitng_agents = existing_agents_list()
     if (load_release_info()[0].size() != 0){
         println ("** Start CREATING agent **")
@@ -38,6 +37,7 @@ def call(){
         println (agent_id)
         println (blob_file_name)
         println ("******")
+        def restore_agent = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.restoreAgent"
         restore_agent(agent_id, display_name, blob_file_name)
         println ("--> Blob is uploaded to agent:${display_name}")
     }
