@@ -27,12 +27,14 @@ def call(){
                 def display_name = agnt_details.displayName
                 def agntName_n_id = ["${display_name}": " ${agent_id}"]
                 println ("--> ${agntName_n_id} Agent is created")
-                restore_agent(agent_id, i[0], i[1])
-                println ("--> Blob is uploaded to ${display_name} agent")
             }
             else{
                 println("--> ${i[0]} is already exists. Can't be recreated.")
             }
+        }
+        for (i in [load_release_info()[0],load_release_info()[1]].transpose()){
+            restore_agent(agent_id, i[0], i[1])
+            println ("--> Blob is uploaded to ${i[0]} agent")
         }
     }
 }
