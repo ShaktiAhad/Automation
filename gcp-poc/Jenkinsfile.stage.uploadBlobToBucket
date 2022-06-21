@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-
+@NonCPS
 def call(){
     def gcloud_auth = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.tokenCreation"
     gcloud_auth()
@@ -25,5 +25,4 @@ def call(){
         println ("--> ${load_release_info()[3]} is uploaded to bucket")
     }
 }
-
 return this
