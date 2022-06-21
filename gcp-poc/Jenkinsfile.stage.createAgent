@@ -23,7 +23,7 @@ def call(){
                 create_agent.getOutputStream().write(payload.getBytes("UTF-8"))
                 def agnt_details = new JsonSlurperClassic().parseText(create_agent.inputStream.text)
                 def name = agnt_details.name.split('/')
-                def agent_id = name[name.length - 1]
+                agent_id = name[name.length - 1]
                 def display_name = agnt_details.displayName
                 def agntName_n_id = ["${display_name}": " ${agent_id}"]
                 println ("--> ${agntName_n_id} Agent is created")
