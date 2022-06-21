@@ -18,13 +18,7 @@ node('master'){
     stage('preparation'){
         println "--> preparation stage"
         cleanWs()
-        // withCredentials([usernamePassword(credentialsId: 'git-cred', passwordVariable: 'pass', usernameVariable: 'user')]) {
-        //     sh 'git clone https://${user}:${pass}@github.axa.com/ahadnoor-shakti/Automation.git'
-        // }
-        // def fleChkNgcpCompUpdt = load ("Automation/gcp-poc/Jenkinsfile.util.fleChkNgcpCompUpdt")
-        // fleChkNgcpCompUpdt()
         sh "git clone https://github.com/ShaktiAhad/Automation.git"
-        // sh(script: 'gcloud components update -q')
     }
 
     stage('upload blob file to bucket'){
@@ -32,24 +26,6 @@ node('master'){
         def uploadBlobToBucket = load ("Automation/gcp-poc/Jenkinsfile.stage.uploadBlobToBucket")
         uploadBlobToBucket()
     }
-
-    // stage('create_agent') {
-    //     println "--> create_agent stage"
-    //     def createAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.createAgent")
-    //     create_agent()
-    // }
-
-    // stage('update_existing_agent'){
-    //     println "--> update_existing_agent stage"
-    //     def updateAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.updateAgent")
-    //     updateAgent()
-    // }
-
-    // stage('delete_agent'){
-    //     println "--> delete_agent stage"
-    //     // def deleteAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.deleteAgent")
-    //     // deleteAgent()
-    // }
 
     stage('workspace cleanup'){
         cleanWs()
