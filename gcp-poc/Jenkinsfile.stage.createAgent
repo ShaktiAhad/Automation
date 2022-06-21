@@ -10,7 +10,7 @@ def call(){
         println ("** Start CREATING agent **")
         def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
         def create_agent = apiPreparation(null)[0]
-        for (i in ([load_release_info()[0],load_release_info()[1]])){
+        for (i in [load_release_info()[0],load_release_info()[1]].transpose()){
             if(!(each_agent in existing_agent_name)){
                 def payload = """{
                     "displayName": "${each_agent}",
