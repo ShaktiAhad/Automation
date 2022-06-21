@@ -12,6 +12,7 @@ def call(){
         def agent_id = name[name.length - 1]
         def display_name = each_agent.displayName
         agentName_n_id.put(display_name, agent_id)
+        println (display_name)
         agentName.add(display_name)
         }
     println (agentName_n_id)
