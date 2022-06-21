@@ -18,7 +18,7 @@ node('master'){
     stage('preparation'){
         println "--> preparation stage"
         cleanWs()
-        sh "git clone https://github.com/ShaktiAhad/Automation.git"
+        sh ("git clone https://github.com/ShaktiAhad/Automation.git")
     }
 
     stage('upload blob file to bucket'){
