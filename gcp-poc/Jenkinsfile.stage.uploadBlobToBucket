@@ -4,7 +4,7 @@ def call(){
     def gcloud_auth = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.tokenCreation"
     gcloud_auth()
     def blob_file_name = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.blobFileRename"
-    def load_json_file = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
+    def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
     if (load_release_info[0].size() != 0){
         for (i in [load_release_info[0],load_release_info[1]]){
             def blob_file_path = sh(script: "find ${env.WORKSPACE} -type f -name ${blob_file_name(i[1])}.blob", returnStdout: true).trim()
