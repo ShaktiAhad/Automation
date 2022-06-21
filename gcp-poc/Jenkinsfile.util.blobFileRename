@@ -1,0 +1,12 @@
+#!/usr/bin/env groovy
+
+def call(blb_file){
+    def blob_file_name = blb_file
+    if (blob_file_name.endsWith("blob")){
+        def name = blob_file_name.split('\\.')
+        def modified_blob_file_name = name[0]
+        return modified_blob_file_name
+    }
+}
+  
+return this

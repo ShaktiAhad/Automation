@@ -1,0 +1,34 @@
+#!/usr/bin/env groovy
+import groovy.json.JsonSlurper
+
+def call(){
+    filename = "${env.WORKSPACE}/Automation/gcp-poc/release_info.json"
+    content = new JsonSlurper().parse(new File(filename))
+
+    def create_agents = []
+    def create_blob_files = []
+    def update_agents = []
+    def update_blob_files = []
+    def delete_agents = []
+    def task = ["create", "update", "delete"]
+
+    def i = 0
+    while (i < task.size()){
+        if (task[i] in content["release_info"]){
+            for (each_agent in content["release_info"]["${task[i]}"]){
+                if (task[i] == "create"){ 
+                    create_agents.add(each_agent["agent_name"])
+                    create_blob_files.add(each_agent["blob_file_name"])}
+                else if (task[i] == "update"){ 
+                    update_agents.add(each_agent["agent_name"])
+                    update_blob_files.add(each_agent["blob_file_name"])}
+                else if(task[i] == "delete"){delete_agents.add(each_agent["agent_name"])}
+            }
+        }
+        i++
+    }
+    return [create_agents, create_blob_files,
+            update_agents, update_blob_files,
+            delete_agents]
+}
+return this

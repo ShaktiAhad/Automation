@@ -1,0 +1,38 @@
+#!/usr/bin/env groovy
+import groovy.json.JsonSlurper
+
+def call(){
+    def load_json_file = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
+    def existing_agents_list = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.stage.getExistingAgent"
+    def restore_agent = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.restoreAgent"
+    def existing_agent_name = existing_agents_list()*.key
+    if (load_release_info[0].size() != 0){
+        println ("** Start CREATING agent **")
+        def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
+        def create_agent = apiPreparation(null)[0]
+        for (i in [load_release_info[0],load_release_info[1]]){
+            if(!(each_agent in existing_agent_name)){
+                def payload = """{
+                    "displayName": "${each_agent}",
+                    "defaultLanguageCode": "en",
+                    "timeZone": "Asia/Tokyo", 
+                    "description": "${each_agent} agent"
+                    }"""
+                create_agent.setRequestMethod("POST")
+                create_agent.setDoOutput(true)
+                create_agent.getOutputStream().write(payload.getBytes("UTF-8"))
+                def agnt_details = new JsonSlurper().parseText(create_agent.inputStream.text)
+                def name = agnt_details.name.split('/')
+                def agent_id = name[name.length - 1]
+                def display_name = agnt_details.displayName
+                def agntName_n_id = ["${display_name}": " ${agent_id}"]
+                println ("--> ${agntName_n_id} Agent is created")
+                restore_agent(agent_id, i[0], i[1])
+                println ("--> Blob is uploaded to ${display_name} agent")
+            }
+            else{
+                println("--> ${each_agent} is already exists. Can't be recreated.")
+            }
+        }
+    }
+}
