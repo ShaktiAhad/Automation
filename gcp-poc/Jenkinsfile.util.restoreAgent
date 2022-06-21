@@ -7,6 +7,7 @@ def call(agent_id, agent_name, blob_file){
     def payload = """{
         "agentUri": "gs://${PREPROD_BUCKET}/dialogflowcx/preprod/${params.version}/create/${agent_name}/${blob_file}"
         }"""
+    println payload
     restore_agent.setRequestMethod("POST")
     restore_agent.setDoOutput(true)
     restore_agent.getOutputStream().write(payload.getBytes("UTF-8"))
