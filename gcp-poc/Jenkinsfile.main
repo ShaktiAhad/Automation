@@ -35,8 +35,8 @@ node('master'){
 
     stage('update_existing_agent'){
         println "--> update_existing_agent stage"
-        def updateAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.updateAgent")
-        updateAgent()
+        // def updateAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.updateAgent")
+        // updateAgent()
     }
 
     stage('delete_agent'){
