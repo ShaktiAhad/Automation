@@ -23,7 +23,7 @@ node('master'){
         // }
         // def fleChkNgcpCompUpdt = load ("Automation/gcp-poc/Jenkinsfile.util.fleChkNgcpCompUpdt")
         // fleChkNgcpCompUpdt()
-        sh "git clone https://github.com/ShaktiAhad/gcp-poc.git"
+        sh "git clone https://github.com/ShaktiAhad/Automation.git"
         sh(script: 'gcloud components update -q')
     }
 
