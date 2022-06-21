@@ -11,7 +11,7 @@ def call(agent_id, agent_name, blob_file){
     restore_agent.setRequestMethod("POST")
     restore_agent.setDoOutput(true)
     restore_agent.getOutputStream().write(payload.getBytes("UTF-8"))
-    def restore_agent_detail = new JsonSlurper().parseText(restore_agent.inputStream.text)
+    def restore_agent_detail = new JsonSlurperClassic().parseText(restore_agent.inputStream.text)
     println restore_agent_detail
 }
 return this
