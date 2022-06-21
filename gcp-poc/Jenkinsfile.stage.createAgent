@@ -24,7 +24,8 @@ def call(){
                 def agnt_details = new JsonSlurperClassic().parseText(create_agent.inputStream.text)
                 def name = agnt_details.name.split('/')
                 agent_id = name[name.length - 1]
-                def display_name = agnt_details.displayName
+                display_name = agnt_details.displayName
+                blob_file_name = i[1]
                 def agntName_n_id = ["${display_name}": " ${agent_id}"]
                 println ("--> ${agntName_n_id} Agent is created")
             }
@@ -32,12 +33,13 @@ def call(){
                 println("--> ${i[0]} is already exists. Can't be recreated.")
             }
         }
-        for (j in [load_release_info()[0],load_release_info()[1]].transpose()){
-            println (j[1])
-            println (agent_id)
-            restore_agent(agent_id, j[0], j[1])
-            println ("--> Blob is uploaded to ${j[0]} agent")
-        }
+        println ("******")
+        println (display_name)
+        println (agent_id)
+        println (blob_file_name)
+        println ("******")
+        restore_agent(agent_id, display_name, blob_file_name)
+        println ("--> Blob is uploaded to agent:${j[0]}")
     }
 }
 return this
