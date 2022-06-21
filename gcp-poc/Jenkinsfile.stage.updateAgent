@@ -1,5 +1,4 @@
 #!/usr/bin/env groovy
-import groovy.json.JsonSlurper
 
 def call(){
     def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"

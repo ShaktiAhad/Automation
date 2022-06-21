@@ -1,10 +1,10 @@
 #!/usr/bin/env groovy
-import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 
 def call(){
     def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
     def get_agent_detail = apiPreparation(null)[0]
-    def agent_details = new JsonSlurper().parseText(get_agent_detail.inputStream.text)
+    def agent_details = new JsonSlurperClassic().parseText(get_agent_detail.inputStream.text)
     def agentName_n_id = [:]
     for (each_agent in agent_details.agents){
         def name = each_agent.name.split('/')

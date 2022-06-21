@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 
 def call(){
     def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
@@ -21,7 +21,7 @@ def call(){
                 create_agent.setRequestMethod("POST")
                 create_agent.setDoOutput(true)
                 create_agent.getOutputStream().write(payload.getBytes("UTF-8"))
-                def agnt_details = new JsonSlurper().parseText(create_agent.inputStream.text)
+                def agnt_details = new JsonSlurperClassic().parseText(create_agent.inputStream.text)
                 def name = agnt_details.name.split('/')
                 def agent_id = name[name.length - 1]
                 def display_name = agnt_details.displayName
