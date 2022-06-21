@@ -11,7 +11,6 @@ def call(agent_id){
         each_url.setRequestProperty("Authorization", "Bearer ${token}")
         each_url.setRequestProperty("Content-Type", "application/json")
     }
-    println (agent_id)
     return [call_agent_api_url, call_restore_agent_api_url]
 
 }
