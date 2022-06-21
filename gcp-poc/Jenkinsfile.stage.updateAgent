@@ -10,7 +10,7 @@ def call(){
         def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
         def create_agent = apiPreparation(null)[0]
         for (i in [load_release_info()[2],load_release_info()[3]].transpose()){
-            if(each_agent in existing_agent_name){
+            if(i[0] in existing_agent_name){
                 println ("--> Found the agent: [${each_agent}: ${existing_agents_list()[each_agent]}]")
                 restore_agent(agent_id, i[0], i[1])
                 println ("--> Blob is uploaded to ${each_agent} agent")
