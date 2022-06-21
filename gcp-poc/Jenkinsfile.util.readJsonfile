@@ -1,6 +1,7 @@
 #!/usr/bin/env groovy
 import groovy.json.JsonSlurper
 
+@NonCPS
 def call(){
     filename = "${env.WORKSPACE}/Automation/gcp-poc/release_info.json"
     content = new JsonSlurper().parse(new File(filename))
