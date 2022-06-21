@@ -9,6 +9,7 @@ def call(){
     if (load_release_info()[0].size() != 0){
         println ("** Start CREATING agent **")
         def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
+        def create_agent = apiPreparation(null)[0]
         for (i in [load_release_info()[0],load_release_info()[1]].transpose()){
             if(!(each_agent in existing_agent_name)){
                 def payload = """{
@@ -17,7 +18,6 @@ def call(){
                     "timeZone": "Asia/Tokyo", 
                     "description": "${each_agent} agent"
                     }"""
-                def create_agent = apiPreparation(null)[0]
                 create_agent.setRequestMethod("POST")
                 create_agent.setDoOutput(true)
                 create_agent.getOutputStream().write(payload.getBytes("UTF-8"))
