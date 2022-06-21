@@ -7,10 +7,10 @@ def call(){
     def restore_agent = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.restoreAgent"
     def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
     def create_agent = apiPreparation(null)[0]
+    println(existing_agents_list())
     if (load_release_info()[0].size() != 0){
         println ("** Start CREATING agent **")
         for (i in [load_release_info()[0],load_release_info()[1]].transpose()){
-            println ("hello1")
             if(!(i[0] in existing_agents_list())){
                 println ("hello2")
                 def payload = """{
