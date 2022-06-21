@@ -34,6 +34,7 @@ def call(){
         }
         for (j in [load_release_info()[0],load_release_info()[1]].transpose()){
             println (j[1])
+            println (agent_id)
             restore_agent(agent_id, j[0], j[1])
             println ("--> Blob is uploaded to ${j[0]} agent")
         }
