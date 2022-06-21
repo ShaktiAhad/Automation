@@ -12,6 +12,7 @@ def call(){
         def create_agent = apiPreparation(null)[0]
         for (i in [load_release_info()[0],load_release_info()[1]].transpose()){
             if(!(i[0] in existing_agent_name)){
+                println("agent: ${i[0]}")
                 def payload = """{
                     "displayName": "${i[0]}",
                     "defaultLanguageCode": "en",
