@@ -1,7 +1,6 @@
 #!/usr/bin/env groovy
 import groovy.json.JsonSlurperClassic
 
-@NonCPS
 def call(){
     def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
     def existing_agents_list = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.getExistingAgent"
@@ -11,7 +10,9 @@ def call(){
     if (load_release_info()[0].size() != 0){
         println ("** Start CREATING agent **")
         for (i in [load_release_info()[0],load_release_info()[1]].transpose()){
+            println ("hello1")
             if(!(i[0] in existing_agents_list())){
+                println ("hello2")
                 def payload = """{
                     "displayName": "${i[0]}",
                     "defaultLanguageCode": "en",
