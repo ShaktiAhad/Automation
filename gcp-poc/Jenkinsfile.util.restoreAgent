@@ -5,7 +5,7 @@ def call(agent_id, agent_name, blob_file){
     def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
     def restore_agent = apiPreparation(agent_id)[1]
     def payload = """{
-        "agentUri": "gs://${PREPROD_BUCKET}/dialogflowcx/preprod/${params.version}/create/${agent_name}/${blob_file}"
+        "agentUri": "gs://${PREPROD_BUCKET}/dialogflowcx/preprod/${params.version}/create/${agent_name}/${blob_file}.blob"
         }"""
     restore_agent.setRequestMethod("POST")
     restore_agent.setDoOutput(true)

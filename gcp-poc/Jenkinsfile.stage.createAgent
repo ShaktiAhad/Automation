@@ -39,7 +39,7 @@ def call(){
         println (blob_file_name)
         println ("******")
         restore_agent(agent_id, display_name, blob_file_name)
-        println ("--> Blob is uploaded to agent:${j[0]}")
+        println ("--> Blob is uploaded to agent:${display_name}")
     }
 }
 return this
