@@ -32,9 +32,10 @@ def call(){
                 println("--> ${i[0]} is already exists. Can't be recreated.")
             }
         }
-        for (i in [load_release_info()[0],load_release_info()[1]].transpose()){
-            restore_agent(agent_id, i[0], i[1])
-            println ("--> Blob is uploaded to ${i[0]} agent")
+        for (j in [load_release_info()[0],load_release_info()[1]].transpose()){
+            println (j[1])
+            restore_agent(agent_id, j[0], j[1])
+            println ("--> Blob is uploaded to ${j[0]} agent")
         }
     }
 }
