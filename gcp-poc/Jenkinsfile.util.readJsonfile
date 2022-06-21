@@ -1,10 +1,10 @@
 #!/usr/bin/env groovy
-import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic 
 
 @NonCPS
 def call(){
     filename = "${env.WORKSPACE}/Automation/gcp-poc/release_info.json"
-    content = new JsonSlurper().parse(new File(filename))
+    content = new JsonSlurperClassic().parse(new File(filename))
 
     def create_agents = []
     def create_blob_files = []
@@ -28,7 +28,6 @@ def call(){
         }
         i++
     }
-    println (create_agents)
     return [create_agents, create_blob_files, update_agents, update_blob_files, delete_agents]
 
 }

@@ -5,7 +5,7 @@ def call(){
     gcloud_auth()
     def blob_file_name = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.blobFileRename"
     def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
-    // println (load_release_info()[0])
+    println (load_release_info()[0])
     // println (load_release_info()[1])
     // println (load_release_info()[2])
     // println (load_release_info()[3])
