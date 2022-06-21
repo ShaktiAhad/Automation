@@ -5,19 +5,24 @@ def call(){
     gcloud_auth()
     def blob_file_name = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.blobFileRename"
     def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
+    println (load_release_info()[0])
+    println (load_release_info()[1])
+    println (load_release_info()[2])
+    println (load_release_info()[3])
+
     if (load_release_info()[0].size() != 0){
         for (i in [load_release_info()[0],load_release_info()[1]].transpose()){
-            // def blob_file_path = sh(script: "find ${env.WORKSPACE} -type f -name ${blob_file_name(i[1])}.blob", returnStdout: true).trim()
-            // sh(script: "gsutil cp ${blob_file_path} gs://${PREPROD_BUCKET}/dialogflowcx/preprod/${params.version}/create/${i[0]}/${blob_file_name(i[1])}.blob")
-            println ("--> ${load_release_info()[1]} is uploaded to bucket")
+            def blob_file_path = sh(script: """find ${env.WORKSPACE} -type f -name ${blob_file_name(i[1])}.blob""", returnStdout: true).trim()
+            sh(script: """gsutil cp ${blob_file_path} gs://${PREPROD_BUCKET}/dialogflowcx/preprod/${params.version}/create/${i[0]}/${blob_file_name(i[1])}.blob""")
         }
+        println ("--> ${load_release_info()[1]} is uploaded to bucket")
     }
     if (load_release_info()[2].size() != 0){
         for (j in [load_release_info()[2],load_release_info()[3]].transpose()){
-            // def blob_file_path = sh(script: "find ${env.WORKSPACE} -type f -name ${blob_file_name(j[1])}.blob", returnStdout: true).trim()
-            // sh(script: "gsutil cp ${blob_file_path} gs://${PREPROD_BUCKET}/dialogflowcx/preprod/${params.version}/update/${j[0]}/${blob_file_name(j[1])}.blob")
-            println ("--> ${load_release_info()[3]} is uploaded to bucket")
+            def blob_file_path = sh(script: """find ${env.WORKSPACE} -type f -name ${blob_file_name(j[1])}.blob""", returnStdout: true).trim()
+            sh(script: """gsutil cp ${blob_file_path} gs://${PREPROD_BUCKET}/dialogflowcx/preprod/${params.version}/update/${j[0]}/${blob_file_name(j[1])}.blob""")
         }
+        println ("--> ${load_release_info()[3]} is uploaded to bucket")
     }
 }
 
