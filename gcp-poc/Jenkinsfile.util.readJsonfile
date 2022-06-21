@@ -28,6 +28,8 @@ def call(){
         }
         i++
     }
+    println (create_agents)
     return [create_agents, create_blob_files, update_agents, update_blob_files, delete_agents]
+
 }
 return this
