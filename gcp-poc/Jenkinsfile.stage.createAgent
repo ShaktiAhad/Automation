@@ -33,7 +33,7 @@ def call(){
                 println("--> ${i[0]} is already exists. Can't be recreated.")
             }
         }
-        restore_agent(agent_id, display_name, blob_file_name)
+        restore_agent(agent_id, display_name, blob_file_name, "create")
         println ("--> Blob is uploaded to agent:${display_name}")
     }
 }
