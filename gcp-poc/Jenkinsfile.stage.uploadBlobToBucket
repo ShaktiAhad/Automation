@@ -3,12 +3,13 @@
 def call(){
     def gcloud_auth = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.tokenCreation"
     gcloud_auth()
-    def blob_file_name = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.blobFileRename"
-    def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
-    println (load_release_info()[0])
-    println (load_release_info()[1])
-    println (load_release_info()[2])
-    println (load_release_info()[3])
+    println ("kk")
+    // def blob_file_name = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.blobFileRename"
+    // def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
+    // println (load_release_info()[0])
+    // println (load_release_info()[1])
+    // println (load_release_info()[2])
+    // println (load_release_info()[3])
 
     // if (load_release_info()[0].size() != 0){
     //     // for (i in [load_release_info()[0],load_release_info()[1]].transpose()){
