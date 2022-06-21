@@ -6,7 +6,6 @@ def call(){
     def existing_agents_list = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.getExistingAgent"
     def restore_agent = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.restoreAgent"
     def existing_agent_name = existing_agents_list()*.key
-    println (existing_agent_name)
     if (load_release_info()[0].size() != 0){
         println ("** Start CREATING agent **")
         def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
