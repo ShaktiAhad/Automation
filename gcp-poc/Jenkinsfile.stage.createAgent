@@ -11,12 +11,12 @@ def call(){
         def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
         def create_agent = apiPreparation(null)[0]
         for (i in [load_release_info()[0],load_release_info()[1]].transpose()){
-            if(!(each_agent in existing_agent_name)){
+            if(!(i[0] in existing_agent_name)){
                 def payload = """{
-                    "displayName": "${each_agent}",
+                    "displayName": "${i[0]}",
                     "defaultLanguageCode": "en",
                     "timeZone": "Asia/Tokyo", 
-                    "description": "${each_agent} agent"
+                    "description": "${i[0]} agent"
                     }"""
                 create_agent.setRequestMethod("POST")
                 create_agent.setDoOutput(true)
@@ -31,7 +31,7 @@ def call(){
                 println ("--> Blob is uploaded to ${display_name} agent")
             }
             else{
-                println("--> ${each_agent} is already exists. Can't be recreated.")
+                println("--> ${i[0]} is already exists. Can't be recreated.")
             }
         }
     }
