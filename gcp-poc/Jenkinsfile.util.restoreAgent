@@ -2,8 +2,17 @@
 import groovy.json.JsonSlurperClassic
 
 def call(agent_id, agent_name, blob_file, task_type){
-    def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
-    def restore_agent = apiPreparation(agent_id)[1]
+    env.token = new File("${env.WORKSPACE}/token.txt").text.trim()
+    def url = "https://asia-northeast1-dialogflow.googleapis.com/v3/projects/${PROJECT_NAME}/locations/${LOCATION}/agents"
+    def restore_agent_url = "${url}/hhhh:restore"
+    def restore_agent = new URL(restore_agent_url).openConnection()
+
+        restore_agent.setRequestProperty("Authorization", "Bearer ${token}")
+        restore_agent.setRequestProperty("Content-Type", "application/json")
+    
+    
+    // def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
+    // def restore_agent = apiPreparation(agent_id)[1]
     def payload = """{
         "agentUri": "gs://${PREPROD_BUCKET}/dialogflowcx/preprod/${params.version}/${task_type}/${agent_name}/${blob_file}"
         }"""
