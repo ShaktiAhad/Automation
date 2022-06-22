@@ -13,8 +13,8 @@ def call(){
     def agent_id = []
     for (each_agent in agent_details.agents){
         def name = each_agent.name.split('/')
-        def agnt_id = name[name.length - 1]
-        def display_name = each_agent.displayName
+        def agnt_id = "${name[name.length - 1]}".toString()
+        def display_name = "${each_agent.displayName}".toString()
         agentName_n_id.put(display_name, agnt_id)
         agentName.add(display_name)
         agent_id.add(agnt_id)
