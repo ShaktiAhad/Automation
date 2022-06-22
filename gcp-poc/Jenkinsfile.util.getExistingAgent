@@ -10,17 +10,17 @@ def call(){
     def agent_details = new JsonSlurperClassic().parseText(get_agent_detail.inputStream.text)
     def agentName_n_id = [:]
     def agentName = []
-    def agentId = []
+    def agent_id = []
     for (each_agent in agent_details.agents){
         def name = each_agent.name.split('/')
         def agent_id = name[name.length - 1]
         def display_name = each_agent.displayName
         agentName_n_id.put(display_name, agent_id)
         agentName.add(display_name)
-        agentId.add(agent_id)
+        agent_id.add(agent_id)
         }
     println (agentName_n_id)
-    return agentName
+    return [agentName, agent_id]
 }
 
 return this

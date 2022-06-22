@@ -41,8 +41,8 @@ node('master'){
 
     stage('delete_agent'){
         println "--> delete_agent stage"
-        // def deleteAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.deleteAgent")
-        // deleteAgent()
+        def deleteAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.deleteAgent")
+        deleteAgent()
     }
 
     stage('workspace cleanup'){

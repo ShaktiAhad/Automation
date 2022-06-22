@@ -8,6 +8,10 @@
       "update": [
         {"agent_name": "d",
          "blob_file_name": "d.blob"}
+      ],
+
+      "delete":[
+        {"agent_name": "a"}
       ]
       
     }

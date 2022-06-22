@@ -4,7 +4,7 @@ def call(){
     def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
     def restore_agent = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.restoreAgent"
     def existing_agents_list = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.getExistingAgent"
-    def exisitng_agent_name = existing_agents_list()
+    def exisitng_agent_name = existing_agents_list()[0]
     if (load_release_info()[2].size() != 0){
         println ("** Start UPDATING existing agent **")
         for (i in [load_release_info()[2],load_release_info()[3]].transpose()){
