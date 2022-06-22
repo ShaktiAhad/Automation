@@ -2,8 +2,6 @@
 import groovy.json.JsonSlurperClassic
 
 def call(){
-    def gcloud_auth = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.tokenCreation"
-    gcloud_auth()
     env.token = new File("${env.WORKSPACE}/token.txt").text.trim()
     def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
     def restore_agent = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.restoreAgent"
