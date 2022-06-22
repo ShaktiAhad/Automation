@@ -1,6 +1,7 @@
 PREPROD_BUCKET = "dialogflow-bucket-preprod"
 PROJECT_NAME = "prerprod-project"
 LOCATION = "asia-northeast1"
+URL = "https://asia-northeast1-dialogflow.googleapis.com/v3/projects/${PROJECT_NAME}/locations/${LOCATION}/agents"
 
 node('master'){
     properties([

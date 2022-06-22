@@ -2,12 +2,10 @@
 import groovy.json.JsonSlurperClassic
 
 def call(){
-    def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
     env.token = new File("${env.WORKSPACE}/token.txt").text.trim()
-    def get_agent_detail = new URL(apiPreparation(null)[0]).openConnection()
+    def get_agent_detail = new URL(${URL}).openConnection()
     get_agent_detail.setRequestProperty("Authorization", "Bearer ${token}")
     get_agent_detail.setRequestProperty("Content-Type", "application/json")
-    // def get_agent_detail = apiPreparation(null)[0]
     def agent_details = new JsonSlurperClassic().parseText(get_agent_detail.inputStream.text)
     def agentName_n_id = [:]
     def agentName = []
