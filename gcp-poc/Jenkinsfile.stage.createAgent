@@ -31,6 +31,7 @@ def call(){
                 blob_file_name = i[1]
                 def agntName_n_id = ["${display_name}": " ${agent_id}"]
                 println ("--> ${agntName_n_id} Agent is created")
+                outputStream.flush()
                 outputStream.close()
                 restore_agent(agent_id, display_name, blob_file_name, "create")
                 println ("--> Blob is uploaded to agent:${display_name}")
