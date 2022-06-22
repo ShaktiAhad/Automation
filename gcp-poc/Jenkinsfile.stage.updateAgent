@@ -7,20 +7,18 @@ def call(){
     def existing_agents_list = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.getExistingAgent"
     def exisitng_agent_name = existing_agents_list()[0]
     def exisitng_agent_id = existing_agents_list()[1]
-    def e = existing_agents_list()[2]
-    def f = e*.key
     if (load_release_info()[2].size() != 0){
         println ("** Start UPDATING existing agent **")
         for (i in [load_release_info()[2],load_release_info()[3]].transpose()){
-            if(i[0] in f){
+            if(i[0] in exisitng_agent_name){
                 def create_agent = apiPreparation(null)[0]
-                println ("--> Found the agent: [${i[0]}: ${e[i[0]]}]")
-                restore_agent(agent_id, i[0], i[1])
-                println ("--> Blob is uploaded to ${each_agent} agent")
+                println ("--> Found the agent:${i[0]}")
             }
             else{
                 println("--> ${each_agent} doesn't exist.")
             }
+        restore_agent(agent_id, i[0], i[1])
+        println ("--> Blob is uploaded to ${i[0]} agent")
         }
     }
 }

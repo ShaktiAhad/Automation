@@ -20,7 +20,7 @@ def call(){
         agentName_n_id.put(i[0], i[1])
     }
     println (agentName_n_id)
-    return [agentName, agentId, agentName_n_id]
+    return [agentName, agentId]
 }
 
 return this
