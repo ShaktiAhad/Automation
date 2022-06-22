@@ -6,8 +6,7 @@ def call(){
             export GOOGLE_APPLICATION_CREDENTIALS=${credentials_file}
             gcloud auth application-default print-access-token > token.txt
             ''', returnStdout: true)
-        def gcloud_auth = sh (script: 'gcloud auth activate-service-account --key-file ${credentials_file}')
-        return gcloud_auth
+        sh (script: 'gcloud auth activate-service-account --key-file ${credentials_file}')
     }
 }
 return this
