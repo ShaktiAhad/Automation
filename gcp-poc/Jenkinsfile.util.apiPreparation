@@ -1,17 +1,17 @@
 #!/usr/bin/env groovy
 
 def call(agent_id){
-    env.token = new File("${env.WORKSPACE}/token.txt").text.trim()
+    // env.token = new File("${env.WORKSPACE}/token.txt").text.trim()
     def url = "https://asia-northeast1-dialogflow.googleapis.com/v3/projects/${PROJECT_NAME}/locations/${LOCATION}/agents"
     def restore_agent_url = "${url}/${agent_id}:restore"
-    def call_agent_api_url = new URL(url).openConnection()
-    def call_restore_agent_api_url = new URL(restore_agent_url).openConnection()
-    def api_urls = [call_agent_api_url, call_restore_agent_api_url]
-    for (each_url in api_urls){
-        each_url.setRequestProperty("Authorization", "Bearer ${token}")
-        each_url.setRequestProperty("Content-Type", "application/json")
-    }
-    return [call_agent_api_url, call_restore_agent_api_url]
+    // def call_agent_api_url = new URL(url).openConnection()
+    // def call_restore_agent_api_url = new URL(restore_agent_url).openConnection()
+    // def api_urls = [call_agent_api_url, call_restore_agent_api_url]
+    // for (each_url in api_urls){
+    //     each_url.setRequestProperty("Authorization", "Bearer ${token}")
+    //     each_url.setRequestProperty("Content-Type", "application/json")
+    // }
+    return [url, restore_agent_url]
 
 }
 return this

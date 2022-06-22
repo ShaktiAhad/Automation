@@ -3,6 +3,7 @@ import groovy.json.JsonSlurperClassic
 
 def call(){
     def gcloud_auth = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.tokenCreation"
+    env.token = new File("${env.WORKSPACE}/token.txt").text.trim()
     gcloud_auth()
     def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
     def restore_agent = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.restoreAgent"
@@ -13,27 +14,27 @@ def call(){
         println ("** Start CREATING agent **")
         for (i in [load_release_info()[0],load_release_info()[1]].transpose()){
             if(!(i[0] in exisitng_agents)){
-                def create_agent = apiPreparation(null)[0]
+                // def create_agent = apiPreparation(null)[0]
+                def call_agent_api_url = new URL(apiPreparation(null)[0]).openConnection()
+                call_agent_api_url.setRequestProperty("Authorization", "Bearer ${token}")
+                call_agent_api_url.setRequestProperty("Content-Type", "application/json")
                 def payload = """{
                     "displayName": "${i[0]}",
                     "defaultLanguageCode": "en",
                     "timeZone": "Asia/Tokyo", 
                     "description": "${i[0]} agent"
                     }"""
-                create_agent.setRequestMethod("POST")
-                create_agent.setDoOutput(true)
-                OutputStream outputStream = create_agent.getOutputStream()
+                call_agent_api_url.setRequestMethod("POST")
+                call_agent_api_url.setDoOutput(true)
+                OutputStream outputStream = call_agent_api_url.getOutputStream()
                 outputStream.write(payload.getBytes("UTF-8"))
-                def agnt_details = new JsonSlurperClassic().parseText(create_agent.inputStream.text)
+                def agnt_details = new JsonSlurperClassic().parseText(call_agent_api_url.inputStream.text)
                 def name = agnt_details.name.split('/')
                 agent_id = name[name.length - 1]
                 display_name = agnt_details.displayName
                 blob_file_name = i[1]
                 def agntName_n_id = ["${display_name}": " ${agent_id}"]
                 println ("--> ${agntName_n_id} Agent is created")
-                outputStream.flush()
-                outputStream.close()
-                create_agent.disconnect()
                 restore_agent(agent_id, display_name, blob_file_name, "create")
                 println ("--> Blob is uploaded to agent:${display_name}")
 
