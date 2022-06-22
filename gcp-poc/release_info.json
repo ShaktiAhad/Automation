@@ -1,8 +1,9 @@
 {
     "release_info": {
-      "create": [
+
+      "update": [
         {"agent_name": "a",
-        "blob_file_name": "a.blob"}
+        "blob_file_name": "c.blob"}
       ],
 
       "delete":[
