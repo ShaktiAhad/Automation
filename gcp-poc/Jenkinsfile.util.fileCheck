@@ -1,23 +1,15 @@
 #!/usr/bin/env groovy
 
-def call(){
+def call(blb_file){
     def blob_file_rename = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.blobFileRename"
-    def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
-    def check(blb_file){
-        try {
-            def blob_file_name = blob_file_rename(blb_file)
-            def file_path = "find ${env.WORKSPACE} -type f -name ${blob_file_name}.blob | grep ."
-            def file_existence_status = sh(script: "${file_path}", returnStatus: true)
-            if (file_existence_status != 0){throw new Exception("\n## Error: Couldn't find the file: ${blob_file_name}\n")}
-            else {
-                def absolute_file_path = sh(script: "${file_path}", returnStdout: true).trim()
-                println "\n## Found the file path: ${absolute_file_path}\n"}
-        }catch(Exception e){throw e}
-    }
-
-    if (load_release_info()[1].size() != 0 || load_release_info()[3].size() != 0){
-        for (i in load_release_info()[1]){check(i)}
-        for (j in load_release_info()[3]){check(j)}
-    }
+    try {
+        def blob_file_name = blob_file_rename(blb_file)
+        def file_path = "find ${env.WORKSPACE} -type f -name ${blob_file_name}.blob | grep ."
+        def file_existence_status = sh(script: "${file_path}", returnStatus: true)
+        if (file_existence_status != 0){throw new Exception("\n## Error: Couldn't find the file: ${blob_file_name}\n")}
+        else {
+            def absolute_file_path = sh(script: "${file_path}", returnStdout: true).trim()
+            println "\n## Found the file path: ${absolute_file_path}\n"}
+    }catch(Exception e){throw e}
 }
 return this
