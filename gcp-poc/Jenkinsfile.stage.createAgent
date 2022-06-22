@@ -13,7 +13,7 @@ def call(){
         println ("** Start CREATING agent **")
         for (i in [load_release_info()[0],load_release_info()[1]].transpose()){
             if(!(i[0] in exisitng_agents)){
-                api_url = "https://asia-northeast1-dialogflow.googleapis.com/v3/projects/${PROJECT_NAME}/locations/${LOCATION}/agents"
+                def api_url = "https://asia-northeast1-dialogflow.googleapis.com/v3/projects/${PROJECT_NAME}/locations/${LOCATION}/agents"
                 def call_agent_api_url = new URL(${api_url}).openConnection()
                 call_agent_api_url.setRequestProperty("Authorization", "Bearer ${token}")
                 call_agent_api_url.setRequestProperty("Content-Type", "application/json")

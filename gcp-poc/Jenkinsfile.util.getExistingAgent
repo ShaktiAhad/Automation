@@ -3,7 +3,7 @@ import groovy.json.JsonSlurperClassic
 
 def call(){
     env.token = new File("${env.WORKSPACE}/token.txt").text.trim()
-    api_url = "https://asia-northeast1-dialogflow.googleapis.com/v3/projects/${PROJECT_NAME}/locations/${LOCATION}/agents"
+    def api_url = "https://asia-northeast1-dialogflow.googleapis.com/v3/projects/${PROJECT_NAME}/locations/${LOCATION}/agents"
     def get_agent_detail = new URL(${api_url}).openConnection()
     get_agent_detail.setRequestProperty("Authorization", "Bearer ${token}")
     get_agent_detail.setRequestProperty("Content-Type", "application/json")

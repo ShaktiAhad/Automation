@@ -3,7 +3,7 @@ import groovy.json.JsonSlurperClassic
 
 def call(agent_id, agent_name, blob_file, task_type){
     env.token = new File("${env.WORKSPACE}/token.txt").text.trim()
-    api_url = "https://asia-northeast1-dialogflow.googleapis.com/v3/projects/${PROJECT_NAME}/locations/${LOCATION}/agents"
+    def api_url = "https://asia-northeast1-dialogflow.googleapis.com/v3/projects/${PROJECT_NAME}/locations/${LOCATION}/agents"
     def restore_agent_url = "${api_url}/${agent_id}:restore"
     def restore_agent = new URL(restore_agent_url).openConnection()
     restore_agent.setRequestProperty("Authorization", "Bearer ${token}")
