@@ -20,7 +20,7 @@ def call(){
                     }"""
                 create_agent.setRequestMethod("POST")
                 create_agent.setDoOutput(true)
-                create_agent.getOutputStream().write(payload.getBytes("UTF-8"))
+                OutputStream outputStream = create_agent.getOutputStream().write(payload.getBytes("UTF-8"))
                 def agnt_details = new JsonSlurperClassic().parseText(create_agent.inputStream.text)
                 def name = agnt_details.name.split('/')
                 agent_id = name[name.length - 1]
@@ -28,7 +28,7 @@ def call(){
                 blob_file_name = i[1]
                 def agntName_n_id = ["${display_name}": " ${agent_id}"]
                 println ("--> ${agntName_n_id} Agent is created")
-                create_agent.close()
+                outputStream.close()
                 restore_agent(agent_id, display_name, blob_file_name, "create")
                 println ("--> Blob is uploaded to agent:${display_name}")
 
