@@ -23,30 +23,42 @@ node('master'){
         gcloud_auth()
     }
 
-    stage('upload blob file to bucket'){
-        println "--> upload blob file to bucket stage"
-        def uploadBlobToBucket = load ("Automation/gcp-poc/Jenkinsfile.stage.uploadBlobToBucket")
-        uploadBlobToBucket()
+    def load_release_info = load ("Automation/gcp-poc/Jenkinsfile.util.readJsonfile")
+    if (load_release_info()[0].size() != 0 || load_release_info()[2].size() != 0){
+        stage('upload blob file to bucket'){
+            println "--> upload blob file to bucket stage"
+            def uploadBlobToBucket = load ("Automation/gcp-poc/Jenkinsfile.stage.uploadBlobToBucket")
+            uploadBlobToBucket()
+        }
     }
+    else {println ("--> Nothing to CREATE or UPDATE")}
+    if (load_release_info()[0].size() != 0){
+        stage('create_agent') {
+            println "--> create_agent stage"
+            def createAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.createAgent")
+            createAgent()
 
-    stage('create_agent') {
-        println "--> create_agent stage"
-        def createAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.createAgent")
-        createAgent()
+        }
     }
+    else {println ("--> Nothing to CREATE")}
 
-    stage('update_existing_agent'){
-        println "--> update_existing_agent stage"
-        def updateAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.updateAgent")
-        updateAgent()
+    if (load_release_info()[2].size() != 0){
+        stage('update_existing_agent'){
+            println "--> update_existing_agent stage"
+            def updateAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.updateAgent")
+            updateAgent()
+        }
     }
+    else {println ("--> Nothing to UPDATE")}
 
-    stage('delete_agent'){
-        println "--> delete_agent stage"
-        def deleteAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.deleteAgent")
-        deleteAgent()
+    if (load_release_info()[4].size() != 0){
+        stage('delete_agent'){
+            println "--> delete_agent stage"
+            def deleteAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.deleteAgent")
+            deleteAgent()
+        }
     }
-
+    else {println ("--> Nothing to DELETE")}
     stage('workspace cleanup'){
         cleanWs()
     }
