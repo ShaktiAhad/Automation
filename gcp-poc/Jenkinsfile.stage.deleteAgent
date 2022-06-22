@@ -13,12 +13,13 @@ def call(){
                 println ("--> Found the agent:${each_agent}")
                 def api_url = "https://asia-northeast1-dialogflow.googleapis.com/v3/projects/${PROJECT_NAME}/locations/${LOCATION}/agents"
                 def delete_agent_url = "${api_url}/${existing_agents_list()[1]}"
+                println (delete_agent_url)
                 def delete_agent = new URL(delete_agent_url).openConnection()
                 delete_agent.setRequestProperty("Authorization", "Bearer ${token}")
                 delete_agent.setRequestProperty("Content-Type", "application/json")
                 delete_agent.setRequestMethod("DELETE")
                 delete_agent.setDoOutput(true)
-                delete_agent.getOutputStream().write(payload.getBytes("UTF-8"))
+                // delete_agent.getOutputStream().write(payload.getBytes("UTF-8"))
                 new JsonSlurperClassic().parseText(delete_agent.inputStream.text)
                 println ("--> ${each_agent} agent is deleted")
             }
