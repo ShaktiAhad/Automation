@@ -1,6 +1,12 @@
 #!/usr/bin/env groovy
 
 def call(){
+    def fileCheck = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.fileCheck"
+    def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
+    if (load_release_info()[1].size() != 0 || load_release_info()[3].size() != 0){
+        for (i in load_release_info()[1]){fileCheck(i)}
+        for (j in load_release_info()[3]){fileCheck(j)}
+    }
     withCredentials([file(credentialsId: 'gcp-cred', variable: 'credentials_file')]){
         sh(script: 'gcloud components update -q')
         sh(script: '''

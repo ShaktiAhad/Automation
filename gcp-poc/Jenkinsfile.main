@@ -19,8 +19,6 @@ node('master'){
         println "--> preparation stage"
         cleanWs()
         sh ("git clone https://github.com/ShaktiAhad/Automation.git")
-        def fileCheck = load ("Automation/gcp-poc/Jenkinsfile.util.fileCheck")
-        fileCheck()
         def gcloud_auth = load ("Automation/gcp-poc/Jenkinsfile.util.tokenCreation")
         gcloud_auth()
     }
