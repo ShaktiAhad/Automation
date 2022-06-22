@@ -6,7 +6,7 @@ def call(){
     def restore_agent = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.restoreAgent"
     def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
     def existing_agents_list = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.getExistingAgent"
-    def exisitng_agents = existing_agents_list()[0]
+    def exisitng_agents = existing_agents_list()
     if (load_release_info()[0].size() != 0){
         println ("** Start CREATING agent **")
         for (i in [load_release_info()[0],load_release_info()[1]].transpose()){
@@ -28,13 +28,15 @@ def call(){
                 blob_file_name = i[1]
                 def agntName_n_id = ["${display_name}": " ${agent_id}"]
                 println ("--> ${agntName_n_id} Agent is created")
+                agnt_details.close()
+                restore_agent(agent_id, display_name, blob_file_name, "create")
+                println ("--> Blob is uploaded to agent:${display_name}")
+
             }
             else{
                 println("--> ${i[0]} is already exists. Can't be recreated.")
             }
         }
-        restore_agent(agent_id, display_name, blob_file_name, "create")
-        println ("--> Blob is uploaded to agent:${display_name}")
     }
 }
 return this

@@ -5,8 +5,7 @@ def call(){
     def apiPreparation = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.apiPreparation"
     def restore_agent = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.restoreAgent"
     def existing_agents_list = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.getExistingAgent"
-    def exisitng_agent_name = existing_agents_list()[0]
-    def exisitng_agent_id = existing_agents_list()[1]
+    def exisitng_agent_name = existing_agents_list()
     if (load_release_info()[2].size() != 0){
         println ("** Start UPDATING existing agent **")
         for (i in [load_release_info()[2],load_release_info()[3]].transpose()){

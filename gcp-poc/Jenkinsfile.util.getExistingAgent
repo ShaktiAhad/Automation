@@ -12,15 +12,12 @@ def call(){
         def name = each_agent.name.split('/')
         def agent_id = name[name.length - 1]
         def display_name = each_agent.displayName
-        // agentName_n_id.put(display_name, agent_id)
+        agentName_n_id.put(display_name, agent_id)
         agentName.add(display_name)
         agentId.add(agent_id)
         }
-    for (i in [agentName,agentId].transpose()){
-        agentName_n_id.put(i[0], i[1])
-    }
     println (agentName_n_id)
-    return [agentName, agentId]
+    return agentName
 }
 
 return this
