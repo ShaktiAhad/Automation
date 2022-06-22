@@ -1,13 +1,20 @@
 {
     "release_info": {
-
       "create": [
         {"agent_name": "a",
-        "blob_file_name": "m.blob"}
+        "blob_file_name": "a.blob"},
+        {"agent_name": "b",
+          "blob_file_name": "b.blob"},
+        {"agent_name": "c",
+          "blob_file_name": "c.blob"}
       ],
-
-      "delete":[
-        {"agent_name": "a"}
+      "update":[
+        {"agent_name": "a",
+          "blob_file_name": "d.blob"},
+          {"agent_name": "b",
+            "blob_file_name": "e.blob"},
+          {"agent_name": "c",
+            "blob_file_name": "f.blob"}
       ]
       
     }
