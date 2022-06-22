@@ -12,12 +12,13 @@ def call(){
             if(i[0] in exisitng_agent_name){
                 def create_agent = apiPreparation(null)[0]
                 println ("--> Found the agent:${i[0]}")
+                restore_agent(agent_id, i[0], i[1], "update")
+                println ("--> Blob is uploaded to ${i[0]} agent")
             }
             else{
                 println("--> ${each_agent} doesn't exist.")
             }
-        restore_agent(agent_id, i[0], i[1])
-        println ("--> Blob is uploaded to ${i[0]} agent")
         }
     }
 }
+return this
