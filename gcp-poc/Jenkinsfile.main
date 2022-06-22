@@ -23,8 +23,8 @@ node('master'){
 
     stage('upload blob file to bucket'){
         println "--> upload blob file to bucket stage"
-        def uploadBlobToBucket = load ("Automation/gcp-poc/Jenkinsfile.stage.uploadBlobToBucket")
-        uploadBlobToBucket()
+        // def uploadBlobToBucket = load ("Automation/gcp-poc/Jenkinsfile.stage.uploadBlobToBucket")
+        // uploadBlobToBucket()
     }
 
     stage('create_agent') {

@@ -22,7 +22,8 @@ def call(){
                     }"""
                 create_agent.setRequestMethod("POST")
                 create_agent.setDoOutput(true)
-                OutputStream outputStream = create_agent.getOutputStream().write(payload.getBytes("UTF-8"))
+                OutputStream outputStream = create_agent.getOutputStream()
+                outputStream.write(payload.getBytes("UTF-8"))
                 def agnt_details = new JsonSlurperClassic().parseText(create_agent.inputStream.text)
                 def name = agnt_details.name.split('/')
                 agent_id = name[name.length - 1]
