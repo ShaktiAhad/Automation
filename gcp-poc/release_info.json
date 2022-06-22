@@ -3,7 +3,7 @@
 
       "create": [
         {"agent_name": "a",
-        "blob_file_name": "c"}
+        "blob_file_name": "m.blob"}
       ],
 
       "delete":[
