@@ -6,31 +6,36 @@ def call(){
     def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
     def existing_agents_list = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.getExistingAgent"
     def exisitng_agent_name = existing_agents_list()[0]
-    if (load_release_info()[4].size() != 0){
-        println ("** Start DELETING agent **")
-        for (each_agent in load_release_info()[4]){
-            if(each_agent in exisitng_agent_name){
-                println ("--> Found the agent:${each_agent}")
-                def api_url = "https://asia-northeast1-dialogflow.googleapis.com/v3/projects/${PROJECT_NAME}/locations/${LOCATION}/agents"
-                def delete_agent_url = "${api_url}/${existing_agents_list()[1]}"
-                println (delete_agent_url)
-                def delete_agent = new URL(delete_agent_url).openConnection()
-                delete_agent.setRequestProperty("Authorization", "Bearer ${token}")
-                delete_agent.setRequestProperty("Content-Type", "application/json")
-                delete_agent.setRequestMethod("DELETE")
-                delete_agent.setDoOutput(true)
-                // delete_agent.getOutputStream().write(payload.getBytes("UTF-8"))
-                new JsonSlurperClassic().parseText(delete_agent.inputStream.text)
-                println ("--> ${each_agent} agent is deleted")
-            }
-            else{
-                println("--> ${each_agent} doesn't exist.")
-            }
-        }
+    def exisitng_agent_id = existing_agents_list()[1]
+    def f = [:]
+
+    for (i in [exisitng_agent_name,exisitng_agent_id].transpose()){
+        f.put(i[0], i[1])
     }
+    println (f)
 
-
-
+    // if (load_release_info()[4].size() != 0){
+    //     println ("** Start DELETING agent **")
+    //     for (each_agent in load_release_info()[4]){
+    //         if(each_agent in exisitng_agent_name){
+    //             println ("--> Found the agent:${each_agent}")
+    //             def api_url = "https://asia-northeast1-dialogflow.googleapis.com/v3/projects/${PROJECT_NAME}/locations/${LOCATION}/agents"
+    //             def delete_agent_url = "${api_url}/${existing_agents_list()[1]}"
+    //             println (delete_agent_url)
+    //             def delete_agent = new URL(delete_agent_url).openConnection()
+    //             delete_agent.setRequestProperty("Authorization", "Bearer ${token}")
+    //             delete_agent.setRequestProperty("Content-Type", "application/json")
+    //             delete_agent.setRequestMethod("DELETE")
+    //             delete_agent.setDoOutput(true)
+    //             // delete_agent.getOutputStream().write(payload.getBytes("UTF-8"))
+    //             new JsonSlurperClassic().parseText(delete_agent.inputStream.text)
+    //             println ("--> ${each_agent} agent is deleted")
+    //         }
+    //         else{
+    //             println("--> ${each_agent} doesn't exist.")
+    //         }
+    //     }
+    // }
 
 }
 return this
