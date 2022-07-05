@@ -24,7 +24,7 @@ node('master'){
         println "--> preparation stage"
         cleanWs()
         if (params.env == "preprod"){
-            checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'https://github.com/ShaktiAhad/Automation.git']], branches: [[name: 'refs/heads/main']]], poll: false
+            checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'https://github.com/ShaktiAhad/Automation.git', credentialsId: 'personal-git-cred']], branches: [[name: 'refs/heads/main']]], poll: false
             stage('git check & create & push tag'){
                 println "--> git check & create & push tag stage"
                 def ghCheckCreatePushTag = load ("gcp-poc/Jenkinsfile.util.ghCheckCreatePushTag")
@@ -32,7 +32,7 @@ node('master'){
             }
         }
         else{
-            checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'https://github.com/ShaktiAhad/Automation.git']], branches: [[name: 'refs/tags/${version}']]], poll: false
+            checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'https://github.com/ShaktiAhad/Automation.git', credentialsId: 'personal-git-cred']], branches: [[name: 'refs/tags/${version}']]], poll: false
         }
     }
     stage('token creation'){
