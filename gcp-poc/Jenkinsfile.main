@@ -18,8 +18,8 @@ node('master'){
     stage('preparation'){
         println "--> preparation stage"
         cleanWs()
-        checkout scm: [$class: 'GitSCM', branches: [[name: 'refs/tags/${params.version}']]], poll: false
-        sh ("git clone https://github.com/ShaktiAhad/Automation.git")
+        checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'https://github.com/ShaktiAhad/Automation.git']], branches: [[name: 'refs/tags/${params.version}']]], poll: false
+        // sh ("git clone https://github.com/ShaktiAhad/Automation.git")
         def gcloud_auth = load ("Automation/gcp-poc/Jenkinsfile.util.tokenCreation")
         gcloud_auth()
     }
