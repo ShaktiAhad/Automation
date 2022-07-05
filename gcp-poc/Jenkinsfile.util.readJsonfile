@@ -3,7 +3,7 @@ import groovy.json.JsonSlurperClassic
 
 @NonCPS
 def call(){
-    filename = "${env.WORKSPACE}/Automation/gcp-poc/release_info.json"
+    filename = "${env.WORKSPACE}gcp-poc/release_info.json"
     content = new JsonSlurperClassic().parse(new File(filename))
 
     def create_agents = []
