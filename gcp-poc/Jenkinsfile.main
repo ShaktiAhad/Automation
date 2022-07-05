@@ -18,47 +18,48 @@ node('master'){
     stage('preparation'){
         println "--> preparation stage"
         cleanWs()
+        checkout scm: [$class: 'GitSCM', branches: [[name: 'refs/tags/${params.version}']]], poll: false
         sh ("git clone https://github.com/ShaktiAhad/Automation.git")
         def gcloud_auth = load ("Automation/gcp-poc/Jenkinsfile.util.tokenCreation")
         gcloud_auth()
     }
 
     def load_release_info = load ("Automation/gcp-poc/Jenkinsfile.util.readJsonfile")
-    if (load_release_info()[0].size() != 0 || load_release_info()[2].size() != 0){
-        stage('upload blob file to bucket'){
+    stage('upload blob file to bucket'){
+        if (load_release_info()[0].size() != 0 || load_release_info()[2].size() != 0){
             println "--> upload blob file to bucket stage"
             def uploadBlobToBucket = load ("Automation/gcp-poc/Jenkinsfile.stage.uploadBlobToBucket")
             uploadBlobToBucket()
         }
+        else {println ("--> Nothing to CREATE or UPDATE")}
     }
-    else {println ("--> Nothing to CREATE or UPDATE")}
-    if (load_release_info()[0].size() != 0){
-        stage('create_agent') {
+
+    stage('create_agent') {
+        if (load_release_info()[0].size() != 0){
             println "--> create_agent stage"
             def createAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.createAgent")
             createAgent()
-
         }
+        else {println ("--> Nothing to CREATE")}
     }
-    else {println ("--> Nothing to CREATE")}
 
-    if (load_release_info()[2].size() != 0){
-        stage('update_existing_agent'){
+    stage('update_existing_agent'){
+        if (load_release_info()[2].size() != 0){
             println "--> update_existing_agent stage"
             def updateAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.updateAgent")
             updateAgent()
         }
+        else {println ("--> Nothing to UPDATE")}
     }
-    else {println ("--> Nothing to UPDATE")}
 
-    if (load_release_info()[4].size() != 0){
-        stage('delete_agent'){
+    stage('delete_agent'){
+        if (load_release_info()[4].size() != 0){
             println "--> delete_agent stage"
             def deleteAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.deleteAgent")
             deleteAgent()
         }
+        else {println ("--> Nothing to DELETE")}
     }
-    else {println ("--> Nothing to DELETE")}
     stage('workspace cleanup'){
         cleanWs()
     }
