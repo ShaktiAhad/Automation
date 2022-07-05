@@ -1,16 +1,23 @@
 #!/usr/bin/groovy
 
-tag  = "${params.version}"
+param_version_value  = "${params.version}"
 def call(){
-    println ("--> Starting check remote tag ${tag}")
-    def result = sh(script: "git ls-remote origin refs/tags/${tag}", returnStdout: true).trim()
-    if (result.size() == 0) {
-      println ("--> Creating tag:${tag}")
-      sh ("git tag -a ${tag} -m 'created by jenkin'")
-      sh ("git push origin ${tag}")
+    def load_release_info = load "${env.WORKSPACE}/gcp-poc/Jenkinsfile.util.readJsonfile"
+    def version = load_release_info[5]
+    if (param_version_value == version){
+      println ("--> Starting check remote tag ${param_version_value}")
+      def result = sh(script: "git ls-remote origin refs/tag/${param_version_value}", returnStdout: true).trim()
+      if (result.size() == 0) {
+        println ("--> Creating param_version_value:${param_version_value}")
+        sh ("git tag -a ${param_version_value} -m 'created by jenkin'")
+        sh ("git push origin ${param_version_value}")
+      }
+      else { 
+        println ("--> ${param_version_value} already exist")
+      }
     }
-    else { 
-      println ("--> ${tag} already exist")
+    else {
+      println ("--> release version:${version} & param version:${param_version_value} doesn't match")
     }
 }
 return this
