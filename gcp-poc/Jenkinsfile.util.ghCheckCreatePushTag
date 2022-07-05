@@ -1,8 +1,8 @@
 #!/usr/bin/groovy
 
 def tag  = "${params.version}"
-def call(tag){
-    // println ("--> Starting check remote tag ${tag}")
+def call(){
+    println ("--> Starting check remote tag ${tag}")
     // def result = sh(script: "git ls-remote origin refs/tags/${tag}", returnStdout: true).trim()
     // if (result.size() == 0) {
     //   println ("--> Creating tag:${tag}")
