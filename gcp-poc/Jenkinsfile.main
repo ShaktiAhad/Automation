@@ -6,6 +6,11 @@ node('master'){
     properties([
         buildDiscarder(logRotator(daysToKeepStr: '3', numToKeepStr: '3')),
         parameters([
+            choice( 
+                name: 'env',
+                description: 'select a env', 
+                choices: ['preprod','prod']
+            ),
             string(
                 name: 'version', 
                 defaultValue: 'v0.0.0',
@@ -18,8 +23,14 @@ node('master'){
     stage('preparation'){
         println "--> preparation stage"
         cleanWs()
-        // sh ("git clone https://github.com/ShaktiAhad.git")
-        checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'https://github.com/ShaktiAhad/Automation.git']], branches: [[name: 'refs/tags/${version}']]], poll: false
+        if ${env} == "preprod"{
+            checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'https://github.com/ShaktiAhad/Automation.git']]], poll: false
+            def ghCheckCreatePushTag = load ("gcp-poc/Jenkinsfile.util.ghCheckCreatePushTag")
+            ghCheckCreatePushTag()
+        }
+        else{
+            checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'https://github.com/ShaktiAhad/Automation.git']], branches: [[name: 'refs/tags/${version}']]], poll: false
+        }
     }
     stage('token creation'){
         println "--> token creation stage"
