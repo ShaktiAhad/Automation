@@ -14,10 +14,10 @@ def call(){
             sh ("git tag -a ${param_version_value} -m 'created by jenkin'")
             sh ("git push origin ${param_version_value}")
         }
-      }
         else { 
           println ("--> ${param_version_value} already exist")
         }
+      }
     }
     else {throw new Exception("\n## release version:${version} & param version:${param_version_value} doesn't match\n")}
   }catch(Exception e){throw e}
