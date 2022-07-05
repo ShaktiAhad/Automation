@@ -3,15 +3,15 @@
 tag  = "${params.version}"
 def call(){
     println ("--> Starting check remote tag ${tag}")
-    // def result = sh(script: "git ls-remote origin refs/tags/${tag}", returnStdout: true).trim()
-    // if (result.size() == 0) {
-    //   println ("--> Creating tag:${tag}")
-    //   sh ("git tag -a ${tag} -m 'created by jenkin'")
-    //   sh ("git push origin ${tag}")
-    // }
-    // else { 
-    //   println ("--> ${tag} already exist")
-    // }
+    def result = sh(script: "git ls-remote origin refs/tags/${tag}", returnStdout: true).trim()
+    if (result.size() == 0) {
+      println ("--> Creating tag:${tag}")
+      sh ("git tag -a ${tag} -m 'created by jenkin'")
+      sh ("git push origin ${tag}")
+    }
+    else { 
+      println ("--> ${tag} already exist")
+    }
 }
 return this
 
