@@ -12,7 +12,7 @@ def call(){
         if (result.size() == 0) {
             println ("--> Creating param_version_value:${param_version_value}")
             sh ("git tag -a ${param_version_value} -m 'created by jenkin'")
-            sh ("git push origin ${param_version_value}")
+            // sh ("git push origin ${param_version_value}")
         }
         else { 
           println ("--> ${param_version_value} already exist")
