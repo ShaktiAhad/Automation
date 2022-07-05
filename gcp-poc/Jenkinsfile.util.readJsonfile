@@ -15,8 +15,8 @@ def call(){
 
     def i = 0
     while (i < task.size()){
-        if (task[i] in content["release_info"]){
-            for (each_agent in content["release_info"]["${task[i]}"]){
+        if (task[i] in content["task_type"]){
+            for (each_agent in content["task_type"]["${task[i]}"]){
                 if (task[i] == "create"){ 
                     create_agents.add(each_agent["agent_name"])
                     create_blob_files.add(each_agent["blob_file_name"])}

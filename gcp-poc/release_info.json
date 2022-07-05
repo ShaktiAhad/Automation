@@ -1,13 +1,6 @@
 {
-    "release_info": {
-      "create":[
-        {"agent_name": "a",
-        "blob_file_name": "a.blob"},
-        {"agent_name": "b",
-          "blob_file_name": "b.blob"},
-        {"agent_name": "c",
-          "blob_file_name": "c.blob"}
-      ],
+    "version": "v0.0.0",
+    "task_type": {
       "update":[
         {"agent_name": "d",
           "blob_file_name": "d.blob"},
