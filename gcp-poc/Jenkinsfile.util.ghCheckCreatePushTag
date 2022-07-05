@@ -1,13 +1,14 @@
 #!/usr/bin/groovy
 
 param_version_value  = "${params.version}"
+c = 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAyxmFJcOIt9zekniSsreJseQWLTZcZe9pC1ioz3mjY4 ahadnoor80@gmail.com'
 def call(){
   try{
     def load_release_info = load "${env.WORKSPACE}/gcp-poc/Jenkinsfile.util.readJsonfile"
     def version = load_release_info()[5]
     if (param_version_value == version){
       println ("--> Starting check remote tag ${param_version_value}")
-      sshagent (credentials: 'personal-git-cred') {
+      sshagent (credentials: [c]) {
         def result = sh(script: "git ls-remote origin refs/tag/${param_version_value}", returnStdout: true).trim()
         if (result.size() == 0) {
             println ("--> Creating param_version_value:${param_version_value}")
