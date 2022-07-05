@@ -3,9 +3,9 @@ import groovy.json.JsonSlurperClassic
 
 def call(){
     env.token = new File("${env.WORKSPACE}/token.txt").text.trim()
-    def load_release_info = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.readJsonfile"
-    def restore_agent = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.restoreAgent"
-    def existing_agents_list = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.getExistingAgent"
+    def load_release_info = load "${env.WORKSPACE}/gcp-poc/Jenkinsfile.util.readJsonfile"
+    def restore_agent = load "${env.WORKSPACE}/gcp-poc/Jenkinsfile.util.restoreAgent"
+    def existing_agents_list = load "${env.WORKSPACE}/gcp-poc/Jenkinsfile.util.getExistingAgent"
     def exisitng_agents = existing_agents_list()[0]
     if (load_release_info()[0].size() != 0){
         println ("** Start CREATING agent **")

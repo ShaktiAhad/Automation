@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 def call(blb_file){
-    def blob_file_rename = load "${env.WORKSPACE}/Automation/gcp-poc/Jenkinsfile.util.blobFileRename"
+    def blob_file_rename = load "${env.WORKSPACE}/gcp-poc/Jenkinsfile.util.blobFileRename"
     try {
         def blob_file_name = blob_file_rename(blb_file)
         def file_path = "find ${env.WORKSPACE} -type f -name ${blob_file_name}.blob | grep ."
