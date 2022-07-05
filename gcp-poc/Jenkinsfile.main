@@ -24,7 +24,7 @@ node('master'){
         println "--> preparation stage"
         cleanWs()
         if (params.env == "preprod"){
-            checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'https://github.com/ShaktiAhad/Automation.git']]], poll: false
+            checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'https://github.com/ShaktiAhad/Automation.git']], branches: [[name: 'refs/heads/main']]], poll: false
             def ghCheckCreatePushTag = load ("gcp-poc/Jenkinsfile.util.ghCheckCreatePushTag")
             ghCheckCreatePushTag()
         }
