@@ -6,6 +6,7 @@ def call(){
     filename = "${env.WORKSPACE}/gcp-poc/release_info.json"
     content = new JsonSlurperClassic().parse(new File(filename))
 
+    def version = content["version"]
     def create_agents = []
     def create_blob_files = []
     def update_agents = []
@@ -28,7 +29,8 @@ def call(){
         }
         i++
     }
-    return [create_agents, create_blob_files, update_agents, update_blob_files, delete_agents, content["version"]]
+    println version
+    return [create_agents, create_blob_files, update_agents, update_blob_files, delete_agents, version]
 
 }
 return this
