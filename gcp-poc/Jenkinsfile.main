@@ -27,43 +27,43 @@ node('master'){
         gcloud_auth()
     }
 
-    // def load_release_info = load ("Automation/gcp-poc/Jenkinsfile.util.readJsonfile")
-    // stage('upload blob file to bucket'){
-    //     if (load_release_info()[0].size() != 0 || load_release_info()[2].size() != 0){
-    //         println "--> upload blob file to bucket stage"
-    //         def uploadBlobToBucket = load ("Automation/gcp-poc/Jenkinsfile.stage.uploadBlobToBucket")
-    //         uploadBlobToBucket()
-    //     }
-    //     else {println ("--> Nothing to CREATE or UPDATE")}
-    // }
+    def load_release_info = load ("gcp-poc/Jenkinsfile.util.readJsonfile")
+    stage('upload blob file to bucket'){
+        if (load_release_info()[0].size() != 0 || load_release_info()[2].size() != 0){
+            println "--> upload blob file to bucket stage"
+            def uploadBlobToBucket = load ("gcp-poc/Jenkinsfile.stage.uploadBlobToBucket")
+            uploadBlobToBucket()
+        }
+        else {println ("--> Nothing to CREATE or UPDATE")}
+    }
 
-    // stage('create_agent') {
-    //     if (load_release_info()[0].size() != 0){
-    //         println "--> create_agent stage"
-    //         def createAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.createAgent")
-    //         createAgent()
-    //     }
-    //     else {println ("--> Nothing to CREATE")}
-    // }
+    stage('create_agent') {
+        if (load_release_info()[0].size() != 0){
+            println "--> create_agent stage"
+            def createAgent = load ("gcp-poc/Jenkinsfile.stage.createAgent")
+            createAgent()
+        }
+        else {println ("--> Nothing to CREATE")}
+    }
 
-    // stage('update_existing_agent'){
-    //     if (load_release_info()[2].size() != 0){
-    //         println "--> update_existing_agent stage"
-    //         def updateAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.updateAgent")
-    //         updateAgent()
-    //     }
-    //     else {println ("--> Nothing to UPDATE")}
-    // }
+    stage('update_existing_agent'){
+        if (load_release_info()[2].size() != 0){
+            println "--> update_existing_agent stage"
+            def updateAgent = load ("gcp-poc/Jenkinsfile.stage.updateAgent")
+            updateAgent()
+        }
+        else {println ("--> Nothing to UPDATE")}
+    }
 
-    // stage('delete_agent'){
-    //     if (load_release_info()[4].size() != 0){
-    //         println "--> delete_agent stage"
-    //         def deleteAgent = load ("Automation/gcp-poc/Jenkinsfile.stage.deleteAgent")
-    //         deleteAgent()
-    //     }
-    //     else {println ("--> Nothing to DELETE")}
-    // }
-    // stage('workspace cleanup'){
-    //     cleanWs()
-    // }
+    stage('delete_agent'){
+        if (load_release_info()[4].size() != 0){
+            println "--> delete_agent stage"
+            def deleteAgent = load ("gcp-poc/Jenkinsfile.stage.deleteAgent")
+            deleteAgent()
+        }
+        else {println ("--> Nothing to DELETE")}
+    }
+    stage('workspace cleanup'){
+        cleanWs()
+    }
 }
