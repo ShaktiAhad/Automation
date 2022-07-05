@@ -1,6 +1,7 @@
 #!/usr/bin/groovy
 
 def tag  = "${params.version}"
+println tag
 def call(tag) {
   println "--> Starting check remote tag ${tag}"
   def result = sh(script: "git ls-remote origin refs/tags/${tag}", returnStdout: true).trim()
