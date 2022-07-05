@@ -7,11 +7,13 @@ def call(){
     def version = load_release_info()[5]
     if (param_version_value == version){
       println ("--> Starting check remote tag ${param_version_value}")
-      def result = sh(script: "git ls-remote origin refs/tag/${param_version_value}", returnStdout: true).trim()
-      if (result.size() == 0) {
-        println ("--> Creating param_version_value:${param_version_value}")
-        sh ("git tag -a ${param_version_value} -m 'created by jenkin'")
-        sh ("git push origin ${param_version_value}")
+      withCredentials([sshUserPrivateKey(credentialsId: 'personal-git-cred', keyFileVariable: 'git-key')]) {
+        def result = sh(script: "git ls-remote origin refs/tag/${param_version_value}", returnStdout: true).trim()
+        if (result.size() == 0) {
+            println ("--> Creating param_version_value:${param_version_value}")
+            sh ("git tag -a ${param_version_value} -m 'created by jenkin'")
+            sh ("git push origin ${param_version_value}")
+        }
       }
       else { 
         println ("--> ${param_version_value} already exist")
