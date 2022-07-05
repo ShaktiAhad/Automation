@@ -29,7 +29,6 @@ def call(){
         }
         i++
     }
-    println version
     return [create_agents, create_blob_files, update_agents, update_blob_files, delete_agents, version]
 
 }
