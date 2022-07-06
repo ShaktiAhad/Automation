@@ -3,7 +3,7 @@
 param_version_value  = "${params.version}"
 def call(){
   try{
-    def load_release_info = load "${env.WORKSPACE}/gcp-poc/Jenkinsfile.util.readJsonfile"
+    def load_release_info = load "${env.WORKSPACE}/gcp-poc/jenkinfile/Jenkinsfile.util.readJsonfile"
     def version = load_release_info()[5]
     if (param_version_value == version){
         println ("--> Starting check remote tag ${param_version_value}")

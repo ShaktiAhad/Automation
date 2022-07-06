@@ -37,15 +37,15 @@ node('master'){
     }
     stage('token creation'){
         println "--> token creation stage"
-        def gcloud_auth = load ("gcp-poc/Jenkinsfile.util.tokenCreation")
+        def gcloud_auth = load ("gcp-poc/jenkinfile/Jenkinsfile.util.tokenCreation")
         gcloud_auth()
     }
 
-    def load_release_info = load ("gcp-poc/Jenkinsfile.util.readJsonfile")
+    def load_release_info = load ("gcp-poc/jenkinfile/Jenkinsfile.util.readJsonfile")
     stage('upload blob file to bucket'){
         if (load_release_info()[0].size() != 0 || load_release_info()[2].size() != 0){
             println "--> upload blob file to bucket stage"
-            def uploadBlobToBucket = load ("gcp-poc/Jenkinsfile.stage.uploadBlobToBucket")
+            def uploadBlobToBucket = load ("gcp-poc/jenkinfile/Jenkinsfile.stage.uploadBlobToBucket")
             uploadBlobToBucket()
         }
         else {println ("--> Nothing to CREATE or UPDATE")}
@@ -54,7 +54,7 @@ node('master'){
     stage('create_agent') {
         if (load_release_info()[0].size() != 0){
             println "--> create_agent stage"
-            def createAgent = load ("gcp-poc/Jenkinsfile.stage.createAgent")
+            def createAgent = load ("gcp-poc/jenkinfile/Jenkinsfile.stage.createAgent")
             createAgent()
         }
         else {println ("--> Nothing to CREATE")}
@@ -63,7 +63,7 @@ node('master'){
     stage('update_existing_agent'){
         if (load_release_info()[2].size() != 0){
             println "--> update_existing_agent stage"
-            def updateAgent = load ("gcp-poc/Jenkinsfile.stage.updateAgent")
+            def updateAgent = load ("gcp-poc/jenkinfile/Jenkinsfile.stage.updateAgent")
             updateAgent()
         }
         else {println ("--> Nothing to UPDATE")}
@@ -72,7 +72,7 @@ node('master'){
     stage('delete_agent'){
         if (load_release_info()[4].size() != 0){
             println "--> delete_agent stage"
-            def deleteAgent = load ("gcp-poc/Jenkinsfile.stage.deleteAgent")
+            def deleteAgent = load ("gcp-poc/jenkinfile/Jenkinsfile.stage.deleteAgent")
             deleteAgent()
         }
         else {println ("--> Nothing to DELETE")}

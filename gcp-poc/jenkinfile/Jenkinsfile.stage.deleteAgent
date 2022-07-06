@@ -3,8 +3,8 @@ import groovy.json.JsonSlurperClassic
 
 def call(){
     env.token = new File("${env.WORKSPACE}/token.txt").text.trim()
-    def load_release_info = load "${env.WORKSPACE}/gcp-poc/Jenkinsfile.util.readJsonfile"
-    def existing_agents_list = load "${env.WORKSPACE}/gcp-poc/Jenkinsfile.util.getExistingAgent"
+    def load_release_info = load "${env.WORKSPACE}/gcp-poc/jenkinfile/Jenkinsfile.util.readJsonfile"
+    def existing_agents_list = load "${env.WORKSPACE}/gcp-poc/jenkinfile/Jenkinsfile.util.getExistingAgent"
     def exisitng_agent_name = existing_agents_list()[0]
     def exisitng_agent_id = existing_agents_list()[1]
 
