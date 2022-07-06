@@ -1,13 +1,14 @@
 {
-    "version": "v0.0.1",
+    "version": "v0.0.2",
     "task_type": {
-      "create":[
+      "update":[
         {"agent_name": "a",
-          "blob_file_name": "a.blob"},
+          "blob_file_name": "c.blob"},
         {"agent_name": "b",
-          "blob_file_name": "a.blob"},
-        {"agent_name": "c",
-          "blob_file_name": "c.blob"}
+          "blob_file_name": "d.blob"}
+      ],
+      "delete":[
+        {"agent_name": "c"}
       ]
     }
 }
