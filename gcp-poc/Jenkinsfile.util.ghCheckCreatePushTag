@@ -7,18 +7,16 @@ def call(){
     def version = load_release_info()[5]
     if (param_version_value == version){
         println ("--> Starting check remote tag ${param_version_value}")
-        def result = sh(script: "git ls-remote origin refs/tag/${param_version_value}", returnStdout: true).trim()
-        if (result.size() == 0) {
-            println ("--> Creating param_version_value:${param_version_value}")
-            sh '''
-            git config --global user.email "ahadnoor80@gmail.com"
-            git config --global user.name "ShaktiAhad"
-            '''
-            sh "git tag -a ${param_version_value} -m 'created by jenkin'"
-            sh ("git push origin ${param_version_value}")
-        }
-        else { 
-          println ("--> ${param_version_value} already exist")
+        sshagent (['personal-git-cred']) {
+          def result = sh(script: "git ls-remote origin refs/tag/${param_version_value}", returnStdout: true).trim()
+          if (result.size() == 0) {
+              println ("--> Creating tag:${param_version_value}")
+              sh ("git tag -a ${param_version_value} -m 'created by jenkin'")
+              sh ("git push origin ${param_version_value}")
+          }
+          else { 
+            println ("--> ${param_version_value} already exist")
+          }
         }
     }
     else {throw new Exception("\n## release version:${version} & param version:${param_version_value} doesn't match\n")}
