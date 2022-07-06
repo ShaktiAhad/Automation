@@ -11,7 +11,7 @@ def call(){
         for (i in [load_release_info()[2],load_release_info()[3]].transpose()){
             if(i[0] in exisitng_agent_name){
                 println ("--> Found the agent:${i[0]}")
-                restore_agent(exisitng_agent_id, i[0], i[1], "update")
+                restore_agent(exisitng_agent_id[i[0]], i[0], i[1], "update")
                 println ("--> Blob is uploaded to ${i[0]} agent")
             }
             else{
