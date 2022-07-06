@@ -27,7 +27,7 @@ node('master'){
             checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:ShaktiAhad/Automation.git', credentialsId: 'personal-git-cred']], branches: [[name: 'refs/heads/main']]], poll: false
             stage('git check & create & push tag'){
                 println "--> git check & create & push tag stage"
-                def ghCheckCreatePushTag = load ("gcp-poc/Jenkinsfile.util.ghCheckCreatePushTag")
+                def ghCheckCreatePushTag = load ("gcp-poc/jenkinfile/Jenkinsfile.util.ghCheckCreatePushTag")
                 ghCheckCreatePushTag()
             }
         }
