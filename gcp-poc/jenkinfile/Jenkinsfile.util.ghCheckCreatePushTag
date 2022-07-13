@@ -11,6 +11,10 @@ def call(){
           def result = sh(script: "git ls-remote origin refs/tag/${param_version_value}", returnStdout: true).trim()
           if (result.size() == 0) {
               println ("--> Creating tag:${param_version_value}")
+              sh """
+                git config --global user.email 'jenkin@test.com'
+                git config --global user.name 'jenkin'
+              """
               sh ("git tag -a ${param_version_value} -m 'created by jenkin'")
               sh ("git push origin ${param_version_value}")
           }
