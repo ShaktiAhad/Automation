@@ -11,7 +11,7 @@ def call(){
         println ("attempt: " + i + ", timestamp: "+res["Timestamp"]+", ResourceStatus: "+res["ResourceStatus"]+", ResourceStatusReason: "+res["ResourceStatusReason"]+".\n")
         i++
         if (i == 4) break
-        sleep(3)
+        sleep(2)
     }
     if (describe_stack_events()[0]["ResourceStatus"] == "UPDATE_COMPLETE"){
         println("CF is updated successfully.")
