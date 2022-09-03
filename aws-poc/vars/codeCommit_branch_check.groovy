@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
 def call(){
-    println (command_functn("aws codecommit get-branch --region ${env.AWS_DEFAULT_REGION} --repository-name ${params.code_commit_repo_name} --branch-name ${params.version}"))
+    withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-cred', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]){
+        println (command_functn("aws codecommit get-branch --region ${this.env.AWS_DEFAULT_REGION} --repository-name ${params.code_commit_repo_name} --branch-name ${params.version}"))
+    }
 }
