@@ -1,4 +1,3 @@
-#!/usr/bin/env groovy
 import groovy.json.JsonSlurperClassic
 
 def call(aws_command){
