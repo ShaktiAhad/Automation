@@ -6,14 +6,14 @@ def call(){
     update_cf_stack()
     output = describe_stack_events()
     i = 1
-    while(describe_stack_events()["ResourceStatus"] != "UPDATE_COMPLETE"){
+    while(describe_stack_events()[0]["ResourceStatus"] != "UPDATE_COMPLETE"){
         res = describe_stack_events()
         println ("attempt: " + i + ", timestamp: "+res["Timestamp"]+", ResourceStatus: "+res["ResourceStatus"]+", ResourceStatusReason: "+res["ResourceStatusReason"]+".\n")
         i++
-        if (i == 6) break
-        sleep(5)
+        if (i == 4) break
+        sleep(3)
     }
-    if (describe_stack_events()["ResourceStatus"] == "UPDATE_COMPLETE"){
+    if (describe_stack_events()[0]["ResourceStatus"] == "UPDATE_COMPLETE"){
         println("CF is updated successfully.")
         println ("timestamp: "+output["Timestamp"]+", ResourceStatus: "+output["ResourceStatus"]+", ResourceStatusReason: "+output["ResourceStatusReason"]+".\n")
     }
