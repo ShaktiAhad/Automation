@@ -1,4 +1,5 @@
 #!/usr/bin/env groovy
+TimeZone.setDefault(TimeZone.getTimeZone('UTC'))
 @Library('my-aws-library') _
 
 def call(){
