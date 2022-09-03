@@ -1,0 +1,22 @@
+#!/usr/bin/env groovy
+@Library('my-aws-library') _
+
+def call(){
+    execute_codePipeline()
+    i=1
+    while(pipeline_status() == "InProgress"){
+        println ("attempt: "+i+", Current status: "+ pipeline_status())
+        pipeline_state()
+        i++
+        sleep (15)
+    }
+    if (pipeline_status() == "Succeeded"){
+        println ("Code Pipeline has been Successfully completed, Status: "+ pipeline_status())
+        pipeline_state()
+    }
+    else {
+        println ("Code Pipeline has been Failed or Stopped or Aborted, Status: "+ pipeline_status())
+        pipeline_state()
+    }
+}
+return this

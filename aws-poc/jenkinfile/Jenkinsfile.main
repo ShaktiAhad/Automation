@@ -1,0 +1,62 @@
+AWS_DEFAULT_REGION="ap-northeast-1"
+AWS_CRED=credentials('aws-cred')
+
+node('master'){
+    properties([
+        buildDiscarder(logRotator(daysToKeepStr: '3', numToKeepStr: '3')),
+        parameters([
+            string(
+                name: 'version', 
+                defaultValue: 'v0.0.1',
+                description: 'release version', 
+                trim: true
+            ),
+            string(
+                name: 'bucket_name', 
+                defaultValue: 'hello',
+                description: 'bucket name', 
+                trim: true
+            ),
+            string(
+                name: 'code_pipeline_name', 
+                defaultValue: 'shakti-test-nodejs',
+                description: 'code pipeline name', 
+                trim: true
+            ),
+            string(
+                name: 'code_commit_repo_name', 
+                defaultValue: 'shakti-test-repo',
+                description: 'code commit repo name', 
+                trim: true
+            ),
+            string(
+                name: 'cf_stack_name', 
+                defaultValue: 's3-bucket-cf',
+                description: 'CF stack name', 
+                trim: true
+            )
+        ])
+    ])
+
+    stage('check release branch on codeCommit'){
+        println "--> check release branch on codeCommit stage"
+        codeCommit_branch_check()
+    }
+
+    stage('Update CF template and get stack events'){
+        println "--> Update CF template and get stack events stage"
+        def updateCFtemplate = load ("aws-poc/jenkinfile/Jenkinsfile.stage.updateCFtemplate")
+        updateCFtemplate()
+
+    }
+
+    // stage('execute code pipeline & get pipeline status'){
+    //     println "--> execute code pipeline & get pipeline status stage"
+    //     def execCodePipeline = load("aws-poc/jenkinfile/Jenkinsfile.stage.execCodePipeline")
+    //     execCodePipeline()
+    // }    
+
+    stage('workspace cleanup'){
+        cleanWs()
+    }
+}
