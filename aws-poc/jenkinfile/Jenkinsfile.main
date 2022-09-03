@@ -41,6 +41,7 @@ node('master'){
 
     stage('check release branch on codeCommit'){
         println "--> check release branch on codeCommit stage"
+        checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:ShaktiAhad/Automation.git', credentialsId: 'personal-git-cred']], branches: [[name: 'refs/heads/main']]], poll: false
         codeCommit_branch_check()
     }
 
