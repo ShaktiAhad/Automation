@@ -22,7 +22,7 @@ def call(){
             sleep(2)
         }
     }catch(Exception){
-        (throw new Exception("## Failed to update ClouFormation. Please check the ResourceStatusReason."))
+        throw new Exception("## Failed to update ClouFormation. Please check the ResourceStatusReason.")
     }
     // catch(Exception e){throw e}
 
