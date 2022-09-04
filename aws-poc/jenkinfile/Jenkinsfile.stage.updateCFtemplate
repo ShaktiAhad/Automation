@@ -21,8 +21,9 @@ def call(){
             }
             sleep(2)
         }
-    }catch(throw new Exception("## Failed to update ClouFormation. Please check the ResourceStatusReason."))
-    
+    }catch(Exception("## Failed to update ClouFormation. Please check the ResourceStatusReason."))
+    // catch(Exception e){throw e}
+
     if (describe_stack_events()[0]["ResourceStatus"] == "UPDATE_COMPLETE"){
         println("CF is updated successfully.")
         println ("timestamp: "+output["Timestamp"][0]+", ResourceStatus: "+output["ResourceStatus"][0]+", ResourceStatusReason: "+output["ResourceStatusReason"][0]+".\n")
