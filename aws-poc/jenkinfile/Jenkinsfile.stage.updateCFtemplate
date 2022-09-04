@@ -7,13 +7,12 @@ def call(){
     output = describe_stack_events()
     i = 1
     while(describe_stack_events()[0]["ResourceStatus"] != "UPDATE_COMPLETE"){
-        res = describe_stack_events()[0]
-        println ("attempt: " + i + ", timestamp: "+res["Timestamp"]+", ResourceStatus: "+res["ResourceStatus"]+", ResourceStatusReason: "+res["ResourceStatusReason"]+".\n")
+        res = describe_stack_events()
+        println ("attempt: " + i + ", timestamp: "+res["Timestamp"][0]+", ResourceStatus: "+res["ResourceStatus"][0]+", ResourceStatusReason: "+res["ResourceStatusReason"][0]+".\n")
         i++
         if (i == 2) {
             println("## Failed to update ClouFormation.\n")
-            for (object in output["StackEvents"]){
-                println(object)
+            for (object in output){
                 if (object["Timestamp"] =~ String.format('%tF', java.time.LocalDateTime.now())){
                     println ("timestamp: "+object["Timestamp"]+", ResourceStatus: "+object["ResourceStatus"]+", ResourceStatusReason: "+object["ResourceStatusReason"]+".\n")
                 }
