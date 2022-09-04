@@ -12,6 +12,7 @@ def call(){
         i++
         if (i == 3) {
             println("## Failed to update ClouFormation.\n")
+            stack_events = describe_stack_events()
             for (object in stack_events){
                 if (object["Timestamp"] =~ String.format('%tF', java.time.LocalDateTime.now())){
                     println ("timestamp: "+object["Timestamp"]+", ResourceStatus: "+object["ResourceStatus"]+", ResourceStatusReason: "+object["ResourceStatusReason"]+".\n")
@@ -22,8 +23,9 @@ def call(){
     }
 
     if (describe_stack_events()[0]["ResourceStatus"] == "UPDATE_COMPLETE"){
+        get_first_event = describe_stack_events()
         println("CF is updated successfully.")
-        println ("timestamp: "+stack_events["Timestamp"][0]+", ResourceStatus: "+stack_events["ResourceStatus"][0]+", ResourceStatusReason: "+stack_events["ResourceStatusReason"][0]+".\n")
+        println ("timestamp: "+get_first_event["Timestamp"][0]+", ResourceStatus: "+get_first_event["ResourceStatus"][0]+", ResourceStatusReason: "+get_first_event["ResourceStatusReason"][0]+".\n")
     }
 }
 return this
