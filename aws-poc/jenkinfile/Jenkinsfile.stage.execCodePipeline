@@ -29,8 +29,8 @@ def call(){
         pipeline_state()
     }
     else {
-        println ("Code Pipeline has been Failed or Stopped or Aborted, Status: "+ pipeline_status())
         pipeline_state()
+        throw new Exception ("## Code Pipeline has been Failed or Stopped or Aborted, Status: "+ pipeline_status())
     }
 }
 return this
