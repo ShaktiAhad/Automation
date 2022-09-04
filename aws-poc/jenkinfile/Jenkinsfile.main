@@ -48,18 +48,18 @@ node('master'){
         }
     }
 
-    stage('Update CF template and get stack events'){
-        println "--> Update CF template and get stack events stage"
-        def updateCFtemplate = load ("aws-poc/jenkinfile/Jenkinsfile.stage.updateCFtemplate")
-        updateCFtemplate()
+    // stage('Update CF template and get stack events'){
+    //     println "--> Update CF template and get stack events stage"
+    //     def updateCFtemplate = load ("aws-poc/jenkinfile/Jenkinsfile.stage.updateCFtemplate")
+    //     updateCFtemplate()
 
-    }
+    // }
 
-    // stage('execute code pipeline & get pipeline status'){
-    //     println "--> execute code pipeline & get pipeline status stage"
-    //     def execCodePipeline = load("aws-poc/jenkinfile/Jenkinsfile.stage.execCodePipeline")
-    //     execCodePipeline()
-    // }    
+    stage('execute code pipeline & get pipeline status'){
+        println "--> execute code pipeline & get pipeline status stage"
+        def execCodePipeline = load("aws-poc/jenkinfile/Jenkinsfile.stage.execCodePipeline")
+        execCodePipeline()
+    }    
 
     stage('workspace cleanup'){
         cleanWs()
