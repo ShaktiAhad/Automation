@@ -4,7 +4,7 @@ TimeZone.setDefault(TimeZone.getTimeZone('UTC'))
 
 def call(){
     println (update_cf_stack())
-    output = describe_stack_events()
+    stack_events = describe_stack_events()
     i = 1
     while(describe_stack_events()[0]["ResourceStatus"] != "UPDATE_COMPLETE"){
         res = describe_stack_events()
@@ -12,7 +12,7 @@ def call(){
         i++
         if (i == 3) {
             println("## Failed to update ClouFormation.\n")
-            for (object in output){
+            for (object in stack_events){
                 if (object["Timestamp"] =~ String.format('%tF', java.time.LocalDateTime.now())){
                     println ("timestamp: "+object["Timestamp"]+", ResourceStatus: "+object["ResourceStatus"]+", ResourceStatusReason: "+object["ResourceStatusReason"]+".\n")
                 }
@@ -23,7 +23,7 @@ def call(){
 
     if (describe_stack_events()[0]["ResourceStatus"] == "UPDATE_COMPLETE"){
         println("CF is updated successfully.")
-        println ("timestamp: "+output["Timestamp"][0]+", ResourceStatus: "+output["ResourceStatus"][0]+", ResourceStatusReason: "+output["ResourceStatusReason"][0]+".\n")
+        println ("timestamp: "+stack_events["Timestamp"][0]+", ResourceStatus: "+stack_events["ResourceStatus"][0]+", ResourceStatusReason: "+stack_events["ResourceStatusReason"][0]+".\n")
     }
 }
 return this
