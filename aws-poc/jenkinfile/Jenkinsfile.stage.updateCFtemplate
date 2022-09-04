@@ -6,25 +6,20 @@ def call(){
     println (update_cf_stack())
     output = describe_stack_events()
     i = 1
-    try{
-        while(describe_stack_events()[0]["ResourceStatus"] != "UPDATE_COMPLETE"){
-            res = describe_stack_events()[0]
-            println ("attempt: " + i + ", timestamp: "+res["Timestamp"]+", ResourceStatus: "+res["ResourceStatus"]+", ResourceStatusReason: "+res["ResourceStatusReason"]+".\n")
-            i++
-            if (i == 4) {
-                println("## Failed to update ClouFormation.\n")
-                for (object in output){
-                    if (timestamp =~ String.format('%tF', java.time.LocalDateTime.now())){
-                        println ("timestamp: "+object["Timestamp"]+", ResourceStatus: "+object["ResourceStatus"]+", ResourceStatusReason: "+object["ResourceStatusReason"]+".\n")
-                    }
+    while(describe_stack_events()[0]["ResourceStatus"] != "UPDATE_COMPLETE"){
+        res = describe_stack_events()[0]
+        println ("attempt: " + i + ", timestamp: "+res["Timestamp"]+", ResourceStatus: "+res["ResourceStatus"]+", ResourceStatusReason: "+res["ResourceStatusReason"]+".\n")
+        i++
+        if (i == 3) {
+            println("## Failed to update ClouFormation.\n")
+            for (object in output){
+                if (timestamp =~ String.format('%tF', java.time.LocalDateTime.now())){
+                    println ("timestamp: "+object["Timestamp"]+", ResourceStatus: "+object["ResourceStatus"]+", ResourceStatusReason: "+object["ResourceStatusReason"]+".\n")
                 }
             }
-            sleep(2)
+            throw new Exception("## Failed to update ClouFormation. Please check the ResourceStatusReason.")
         }
-    }catch(Exception){
-        throw new Exception("## Failed to update ClouFormation. Please check the ResourceStatusReason.")
     }
-    // catch(Exception e){throw e}
 
     if (describe_stack_events()[0]["ResourceStatus"] == "UPDATE_COMPLETE"){
         println("CF is updated successfully.")
