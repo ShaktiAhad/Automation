@@ -52,11 +52,11 @@ node('master'){
 
     }
 
-    // stage('execute code pipeline & get pipeline status'){
-    //     println "--> execute code pipeline & get pipeline status stage"
-    //     def execCodePipeline = load("aws-poc/jenkinfile/Jenkinsfile.stage.execCodePipeline")
-    //     execCodePipeline()
-    // }    
+    stage('execute code pipeline & get pipeline status'){
+        println "--> execute code pipeline & get pipeline status stage"
+        def execCodePipeline = load("aws-poc/jenkinfile/Jenkinsfile.stage.execCodePipeline")
+        execCodePipeline()
+    }    
 
     stage('workspace cleanup'){
         cleanWs()
