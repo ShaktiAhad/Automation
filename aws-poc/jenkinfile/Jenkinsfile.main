@@ -43,7 +43,7 @@ node('master'){
         checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:ShaktiAhad/Automation.git', credentialsId: 'personal-git-cred']], branches: [[name: 'refs/heads/main']]], poll: false
         println "--> check release branch on codeCommit stage"
         branch_name = codeCommit_branch_check()
-        if branch_name["branch"]["branchName"] != (params.version){
+        if (branch_name["branch"]["branchName"] != (params.version)){
             throw new Exception("## Release version:${params.version} and branch name:${branch_name["branch"]["branchName"]} is different.")
         }
     }
