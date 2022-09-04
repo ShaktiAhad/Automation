@@ -13,7 +13,8 @@ def call(){
         if (i == 2) {
             println("## Failed to update ClouFormation.\n")
             for (object in output["StackEvents"]){
-                if (timestamp =~ String.format('%tF', java.time.LocalDateTime.now())){
+                println(object)
+                if (object["Timestamp"] =~ String.format('%tF', java.time.LocalDateTime.now())){
                     println ("timestamp: "+object["Timestamp"]+", ResourceStatus: "+object["ResourceStatus"]+", ResourceStatusReason: "+object["ResourceStatusReason"]+".\n")
                 }
             }
