@@ -3,28 +3,36 @@ TimeZone.setDefault(TimeZone.getTimeZone('UTC'))
 @Library('my-aws-library') _
 
 def call(){
-    update_cf_stack()
+    println (update_cf_stack())
     output = describe_stack_events()
     i = 1
     while(describe_stack_events()[0]["ResourceStatus"] != "UPDATE_COMPLETE"){
         res = describe_stack_events()[0]
         println ("attempt: " + i + ", timestamp: "+res["Timestamp"]+", ResourceStatus: "+res["ResourceStatus"]+", ResourceStatusReason: "+res["ResourceStatusReason"]+".\n")
         i++
-        if (i == 4) break
+        if (i == 4) {
+            for (object in output){
+                def timestamp = object["Timestamp"]
+                if (timestamp =~ String.format('%tF', java.time.LocalDateTime.now())){
+                    println ("timestamp: "+timestamp+", ResourceStatus: "+object["ResourceStatus"]+", ResourceStatusReason: "+object["ResourceStatusReason"]+".\n")
+            }
+            throw new Exception("## Failed to update ClouFormation. Please check the ResourceStatusReason.")
+        }
+        }
         sleep(2)
     }
     if (describe_stack_events()[0]["ResourceStatus"] == "UPDATE_COMPLETE"){
         println("CF is updated successfully.")
         println ("timestamp: "+output["Timestamp"]+", ResourceStatus: "+output["ResourceStatus"]+", ResourceStatusReason: "+output["ResourceStatusReason"]+".\n")
     }
-    else{
-        println ("## Failed to update ClouFormation. Please check the ResourceStatusReason.")
-        for (object in output){
-            def timestamp = object["Timestamp"]
-            if (timestamp =~ String.format('%tF', java.time.LocalDateTime.now())){
-                println ("timestamp: "+timestamp+", ResourceStatus: "+object["ResourceStatus"]+", ResourceStatusReason: "+object["ResourceStatusReason"]+".\n")
-            }
-        }
-    }
+    // else{
+    //     println ("## Failed to update ClouFormation. Please check the ResourceStatusReason.")
+    //     for (object in output){
+    //         def timestamp = object["Timestamp"]
+    //         if (timestamp =~ String.format('%tF', java.time.LocalDateTime.now())){
+    //             println ("timestamp: "+timestamp+", ResourceStatus: "+object["ResourceStatus"]+", ResourceStatusReason: "+object["ResourceStatusReason"]+".\n")
+    //         }
+    //     }
+    // }
 }
 return this

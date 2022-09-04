@@ -1,8 +1,22 @@
 #!/usr/bin/env groovy
 @Library('my-aws-library') _
 
+def pipeline_state(){
+    get_pipeline_state = pipeline_states()
+    for (stage in get_pipeline_state["stageStates"]){
+        for (action in stage["actionStates"]){
+            if (action.containsKey('latestExecution')){
+            println("stageName: "+stage["stageName"]+ ", status: "+action['latestExecution']["status"])
+            }
+            else{
+                println("stageName: "+stage["stageName"]+ ", status: null")
+            }
+        }
+    }
+}
+
 def call(){
-    execute_codePipeline()
+    println (execute_codePipeline())
     i=1
     while(pipeline_status() == "InProgress"){
         println ("attempt: "+i+", Current status: "+ pipeline_status())
