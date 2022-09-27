@@ -25,13 +25,13 @@ node('master'){
             enable_eventRule = enable_eventRule()
             sleep(7)
             describe_eventRule = describe_eventRule()
-            println (describe_eventRule)
+            println ("Rule_name: "+describe_eventRule["Name"]+ " ,Status: "+describe_eventRule["State"])
         }
         if (params.event_rule_status == "disable"){
             disable_eventRule = disable_eventRule()
             sleep(7)
             describe_eventRule = describe_eventRule()
-            println (describe_eventRule)
+            println ("Rule_name: "+describe_eventRule["Name"]+ " ,Status: "+describe_eventRule["State"])
         }
 
     }   
