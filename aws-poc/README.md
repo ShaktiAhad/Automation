@@ -1,4 +1,4 @@
-## Update CF stack and execute CodePipeline by Jenkin
+## Change Event rule status, Update CF stack and execute CodePipeline by Jenkin
 
 Necessary commands
 * [get-codeCommit-branch](https://docs.aws.amazon.com/cli/latest/reference/codecommit/get-branch.html)
