@@ -1,0 +1,40 @@
+@Library('my-aws-library') _
+
+node('master'){
+    properties([
+        buildDiscarder(logRotator(daysToKeepStr: '3', numToKeepStr: '3')),
+        parameters([
+            string(
+                name: 'event_rule_name', 
+                defaultValue: 'test',
+                description: 'event rule name', 
+                trim: true
+            ),
+            choice(
+                name: 'event_rule_status',
+                description: 'Change event rule status', 
+                choices: ['enable', 'disable']
+            )
+        ])
+    ])
+
+    stage('Changing event rule status'){
+        checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:ShaktiAhad/Automation.git', credentialsId: 'personal-git-cred']], branches: [[name: 'refs/heads/main']]], poll: false
+        println "--> Changing event rule status stage"
+        if (params.event_rule_status == "enable"){
+            disable_evetRule = disable_evetRule()
+            sleep(7)
+            describe_eventRule = describe_eventRule()
+        }
+        if (params.event_rule_status == "disable"){
+            enable_evetRule = enable_evetRule()
+            sleep(7)
+            describe_eventRule = describe_eventRule()
+        }
+
+    }   
+
+    stage('workspace cleanup'){
+        cleanWs()
+    }
+}
