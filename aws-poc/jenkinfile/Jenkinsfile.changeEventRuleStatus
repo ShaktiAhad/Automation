@@ -22,12 +22,12 @@ node('master'){
         checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:ShaktiAhad/Automation.git', credentialsId: 'personal-git-cred']], branches: [[name: 'refs/heads/main']]], poll: false
         println "--> Changing event rule status stage"
         if (params.event_rule_status == "enable"){
-            disable_evetRule = disable_evetRule()
+            disable_eventRule = disable_eventRule()
             sleep(7)
             describe_eventRule = describe_eventRule()
         }
         if (params.event_rule_status == "disable"){
-            enable_evetRule = enable_evetRule()
+            enable_eventRule = enable_eventRule()
             sleep(7)
             describe_eventRule = describe_eventRule()
         }
