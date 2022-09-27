@@ -8,3 +8,6 @@ Necessary commands
 * [get-pipeline-state](https://docs.aws.amazon.com/cli/latest/reference/codepipeline/get-pipeline-state.html)
 * [get-pipeline-execution](https://docs.aws.amazon.com/cli/latest/reference/codepipeline/get-pipeline-execution.html)
 * [list-pipeline-executions](https://docs.aws.amazon.com/cli/latest/reference/codepipeline/list-pipeline-executions.html)
+* [enable-event-rule](https://docs.aws.amazon.com/cli/latest/reference/events/enable-rule.html)
+* [disable-event-rule](https://docs.aws.amazon.com/cli/latest/reference/events/disable-rule.html)
+* [describe-event-rule](https://docs.aws.amazon.com/cli/latest/reference/events/describe-rule.html)
