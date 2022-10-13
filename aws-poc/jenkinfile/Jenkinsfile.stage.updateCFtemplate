@@ -4,7 +4,7 @@ TimeZone.setDefault(TimeZone.getTimeZone('UTC'))
 
 def call(){
     println (update_cf_stack())
-    stack_events = describe_stack_events()
+//     stack_events = describe_stack_events()
     i = 1
     while(describe_stack_events()[0]["ResourceStatus"] != "UPDATE_COMPLETE"){
         res = describe_stack_events()
