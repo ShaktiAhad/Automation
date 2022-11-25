@@ -1,0 +1,20 @@
+release_info:
+  create:
+    - agent_name: "d"
+      blob_file_name: "d.blob"
+    - agent_name: "e"
+      blob_file_name: "e.blob"
+    - agent_name: "f"
+      blob_file_name: "f.blob"
+
+  update:
+    - agent_name: "l"
+      blob_file_name: "a.blob"
+    - agent_name: "p"
+      blob_file_name: "b.blob"
+    - agent_name: "o"
+      blob_file_name: "c.blob"
+
+  delete:
+    - agent_name: "agent1"
+    - agent_name: "agent2"
